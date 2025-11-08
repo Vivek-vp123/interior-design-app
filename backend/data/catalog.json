@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "title": "Modern Sectional Sofa",
+    "desc": "A sleek grey fabric sectional for a neutral palette.",
+    "image": "https://picsum.photos/400/300?random=101",
+    "price": "$1299",
+    "category": "Furniture",
+    "colorTags": ["#808080", "#c0c0c0", "#ffffff"],
+    "modelUrl": "/models/sofa.glb",
+    "realWidthM": 2.2
+  },
+  {
+    "id": 2,
+    "title": "Reclaimed Wood Coffee Table",
+    "desc": "Natural oak finish with industrial metal legs.",
+    "image": "https://picsum.photos/400/300?random=102",
+    "price": "$449",
+    "category": "Furniture",
+    "colorTags": ["#8b5e3c", "#a0522d", "#deb887"],
+    "modelUrl": "/models/table.glb",
+    "realWidthM": 1.1
+  },
+  {
+    "id": 3,
+    "title": "Ambient Floor Lamp",
+    "desc": "Minimalist arc floor lamp with warm LED lighting.",
+    "image": "https://picsum.photos/400/300?random=103",
+    "price": "$229",
+    "category": "Lighting",
+    "colorTags": ["#fffff0", "#dcdcdc", "#f5f5f5"],
+    "modelUrl": "/models/lamp.glb",
+    "realWidthM": 0.4
+  },
+  {
+    "id": 4,
+    "title": "Abstract Canvas Art Set",
+    "desc": "Three-piece abstract canvas to add visual depth.",
+    "image": "https://picsum.photos/400/300?random=104",
+    "price": "$189",
+    "category": "Decor",
+    "colorTags": ["#000000", "#ff0000", "#0000ff"],
+    "modelUrl": "/models/art.glb",
+    "realWidthM": 1.5
+  },
+  {
+    "id": 5,
+    "title": "Scandinavian Armchair",
+    "desc": "Comfortable armchair with oak legs and blue upholstery.",
+    "image": "https://picsum.photos/400/300?random=105",
+    "price": "$599",
+    "category": "Furniture",
+    "colorTags": ["#3b5998", "#e9e9e9", "#a67c52"],
+    "modelUrl": "/models/armchair.glb",
+    "realWidthM": 0.8
+  },
+  {
+    "id": 6,
+    "title": "Bookshelf",
+    "desc": "Tall wooden bookshelf for modern interiors.",
+    "image": "https://picsum.photos/400/300?random=106",
+    "price": "$349",
+    "category": "Storage",
+    "colorTags": ["#deb887", "#fff8dc", "#8b4513"],
+    "modelUrl": "/models/bookshelf.glb",
+    "realWidthM": 0.9
+  },
+  {
+    "id": 7,
+    "title": "Round Dining Table",
+    "desc": "White round dining table with minimalist design.",
+    "image": "https://picsum.photos/400/300?random=107",
+    "price": "$799",
+    "category": "Furniture",
+    "colorTags": ["#ffffff", "#e0e0e0", "#bdbdbd"],
+    "modelUrl": "/models/diningtable.glb",
+    "realWidthM": 1.3
+  },
+  {
+    "id": 8,
+    "title": "Indoor Plant Set",
+    "desc": "Set of three decorative indoor plants in ceramic pots.",
+    "image": "https://picsum.photos/400/300?random=108",
+    "price": "$99",
+    "category": "Decor",
+    "colorTags": ["#228b22", "#fff", "#bdb76b"],
+    "modelUrl": "/models/plants.glb",
+    "realWidthM": 0.6
+  }
+  ,
+  {
+    "id": 9,
+    "title": "Mid-Century Lounge Chair",
+    "desc": "Iconic lounge chair, perfect for modern interiors.",
+  "image": "https://picsum.photos/400/300?random=109",
+  "price": "$899",
+  "category": "Furniture",
+  "colorTags": ["#bfa074", "#3a2c1a", "#e9e6e1"],
+  "modelUrl": "/models/mid_century_lounge_chair_4k.glb",
+  "realWidthM": 0.85
+  }
+]

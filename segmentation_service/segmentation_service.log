@@ -1,0 +1,363 @@
+2025-09-01 00:29:17,444 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 00:38:38,691 [INFO] main: Cleaned up old file: 3cea38877d8940599a1126ec42f71379.jpg
+2025-09-01 00:38:38,693 [INFO] main: Cleaned up old file: 64c3ce8d41d44a38bfed6dc0357f9043.jpg
+2025-09-01 00:38:38,694 [INFO] main: Cleaned up old file: 90d944f582ec4c4ea3223679ad6511d8.jpg
+2025-09-01 00:38:38,695 [INFO] main: Cleaned up old file: 9741a09161a14920911b4d3745393952.jpg
+2025-09-01 00:38:38,696 [INFO] main: Cleaned up old file: a02df967d5704f23b2b2c436c2744bce.jpg
+2025-09-01 00:38:38,697 [INFO] main: Cleaned up old file: bb541486d60c41b08cfa7ef0edbf061f.jpg
+2025-09-01 00:38:38,698 [INFO] main: Cleaned up old file: da7d5fb3ac6e4183b4cec32f55b369d2.jpg
+2025-09-01 00:38:38,700 [INFO] main: Cleaned up old file: f967428bde4b42dab0cf1c648dd50bee.jpg
+2025-09-01 00:38:38,701 [INFO] main: Cleaned up old file: fa5f48cf087948598e8d7a0c78d1627f.jpg
+2025-09-01 00:38:38,702 [INFO] main: Cleaned up old file: 3cea38877d8940599a1126ec42f71379_mask.png
+2025-09-01 00:38:38,703 [INFO] main: Cleaned up old file: 64c3ce8d41d44a38bfed6dc0357f9043_mask.png
+2025-09-01 00:38:38,704 [INFO] main: Cleaned up old file: 90d944f582ec4c4ea3223679ad6511d8_mask.png
+2025-09-01 00:38:38,705 [INFO] main: Cleaned up old file: 9741a09161a14920911b4d3745393952_mask.png
+2025-09-01 00:38:38,706 [INFO] main: Cleaned up old file: bb541486d60c41b08cfa7ef0edbf061f_mask.png
+2025-09-01 00:38:38,708 [INFO] main: Cleaned up old file: da7d5fb3ac6e4183b4cec32f55b369d2_mask.png
+2025-09-01 00:38:38,709 [INFO] main: Cleaned up old file: f967428bde4b42dab0cf1c648dd50bee_mask.png
+2025-09-01 00:38:38,710 [INFO] main: Cleaned up old file: fa5f48cf087948598e8d7a0c78d1627f_mask.png
+2025-09-01 12:41:02,139 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 14:54:08,222 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 15:29:55,497 [INFO] main: Cleaned up old file: 38f1829828e9405f9457ac4617ef377d_20250901_003831.jpg
+2025-09-01 15:29:55,501 [INFO] main: Cleaned up old file: 38f1829828e9405f9457ac4617ef377d_20250901_003831_mask.png
+2025-09-01 15:39:35,875 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 15:40:09,729 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 15:40:25,421 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 15:40:47,218 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 15:40:52,450 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 16:47:05,404 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 16:47:12,012 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 16:47:18,638 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 16:47:37,711 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 16:47:59,008 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 16:48:04,706 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 16:48:11,299 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 17:09:25,962 [INFO] main: Cleaned up old file: 1038a7fde70648098904c196d8c617f1_20250901_152948.jpg
+2025-09-01 17:09:25,970 [INFO] main: Cleaned up old file: c60155a9c1a146cf8454a789c41198cb_20250901_155635.jpg
+2025-09-01 17:09:25,972 [INFO] main: Cleaned up old file: 1038a7fde70648098904c196d8c617f1_20250901_152948_mask.png
+2025-09-01 17:09:25,975 [INFO] main: Cleaned up old file: c60155a9c1a146cf8454a789c41198cb_20250901_155635_mask.png
+2025-09-01 17:53:39,850 [ERROR] main: Realtime analysis error: Traceback (most recent call last):
+  File "E:\interior-design-app\segmentation_service\main.py", line 434, in analyze_room
+    raise HTTPException(status_code=404, detail="Mask not found for this room")
+fastapi.exceptions.HTTPException: 404: Mask not found for this room
+
+2025-09-01 17:54:14,630 [ERROR] main: Realtime analysis error: Traceback (most recent call last):
+  File "E:\interior-design-app\segmentation_service\main.py", line 434, in analyze_room
+    raise HTTPException(status_code=404, detail="Mask not found for this room")
+fastapi.exceptions.HTTPException: 404: Mask not found for this room
+
+2025-09-01 18:10:04,414 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 18:10:36,239 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 18:10:44,365 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 18:29:16,976 [INFO] main: Loading DeepLabV3 model...
+2025-09-01 18:30:16,788 [INFO] main: Cleaned up old file: 0c3f1fbdb3e74cffaefd8dcd69bf49d1_20250901_171314.jpg
+2025-09-01 18:30:16,791 [INFO] main: Cleaned up old file: 2994dc86840f4510a4b845ba8a6c8f4c_20250901_170918.jpg
+2025-09-01 18:30:16,793 [INFO] main: Cleaned up old file: 0c3f1fbdb3e74cffaefd8dcd69bf49d1_20250901_171314_mask.png
+2025-09-01 18:30:16,796 [INFO] main: Cleaned up old file: 2994dc86840f4510a4b845ba8a6c8f4c_20250901_170918_mask.png
+2025-09-01 23:47:12,483 [INFO] main: Loading DeepLabV3 model...
+2025-09-02 00:57:37,786 [INFO] main: Cleaned up old file: 775cb23f29514f5ab5ca99439293e294_20250901_183011.jpg
+2025-09-02 00:57:37,790 [INFO] main: Cleaned up old file: 775cb23f29514f5ab5ca99439293e294_20250901_183011_mask.png
+2025-09-02 01:05:04,842 [INFO] main: Loading DeepLabV3 model...
+2025-09-02 01:06:15,897 [INFO] main: Loading DeepLabV3 model...
+2025-09-02 01:08:56,481 [INFO] main: Loading DeepLabV3 model...
+2025-09-02 01:09:02,863 [INFO] main: Loading DeepLabV3 model...
+2025-09-02 01:09:22,862 [INFO] main: Loading DeepLabV3 model...
+2025-09-02 01:09:29,022 [INFO] main: Loading DeepLabV3 model...
+2025-09-02 01:09:34,316 [INFO] main: Loading DeepLabV3 model...
+2025-09-02 01:09:57,252 [INFO] main: Loading DeepLabV3 model...
+2025-09-02 01:11:09,940 [INFO] main: Loading DeepLabV3 model...
+2025-09-02 01:12:48,250 [INFO] main: Loading DeepLabV3 model...
+2025-09-02 01:12:58,844 [ERROR] main: Suggestion generation error: Traceback (most recent call last):
+  File "E:\interior-design-app\segmentation_service\main.py", line 447, in generate_suggestions
+    "suggestions": suggestions,
+                   ^^^^^^^^^^^
+NameError: name 'suggestions' is not defined
+
+2025-09-02 01:13:31,364 [INFO] main: Loading DeepLabV3 model...
+2025-09-02 01:14:10,443 [INFO] main: Loading DeepLabV3 model...
+2025-09-02 01:14:29,867 [INFO] main: Loading DeepLabV3 model...
+2025-09-02 01:14:35,005 [INFO] main: Loading DeepLabV3 model...
+2025-09-12 15:12:43,777 [INFO] main: Loading DeepLabV3 model...
+2025-09-12 16:22:21,722 [INFO] main: Loading DeepLabV3 model...
+2025-09-12 16:23:24,218 [INFO] main: Loading DeepLabV3 model...
+2025-09-12 16:23:31,110 [INFO] main: Loading DeepLabV3 model...
+2025-09-12 16:23:36,609 [INFO] main: Loading DeepLabV3 model...
+2025-09-12 16:23:42,759 [INFO] main: Loading DeepLabV3 model...
+2025-09-12 16:25:08,770 [INFO] main: Loading DeepLabV3 model...
+2025-09-12 16:27:45,961 [INFO] main: Loading DeepLabV3 model...
+2025-09-12 16:28:54,321 [INFO] main: Loading DeepLabV3 model...
+2025-09-12 16:29:18,442 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-09-12 16:29:18,453 [ERROR] main: OpenRouter error: 'choices'
+2025-09-12 16:29:18,486 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-09-12 16:29:18,488 [ERROR] main: OpenRouter error: 'choices'
+2025-09-12 16:29:20,671 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-09-12 16:29:20,672 [ERROR] main: OpenRouter error: 'choices'
+2025-09-12 16:29:20,685 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-09-12 16:29:20,687 [ERROR] main: OpenRouter error: 'choices'
+2025-09-12 16:29:24,850 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-09-12 16:29:24,853 [ERROR] main: OpenRouter error: 'choices'
+2025-09-12 16:29:25,797 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-09-12 16:29:25,798 [ERROR] main: OpenRouter error: 'choices'
+2025-09-12 16:29:36,762 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-09-12 16:29:36,763 [ERROR] main: OpenRouter error: 'choices'
+2025-09-12 16:29:38,056 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-09-12 16:29:38,057 [ERROR] main: OpenRouter error: 'choices'
+2025-09-12 16:40:17,620 [INFO] main: Loading DeepLabV3 model...
+2025-09-12 16:40:21,636 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-09-12 16:40:21,640 [ERROR] main: OpenRouter error: 'choices'
+2025-09-12 16:41:17,285 [INFO] main: Loading DeepLabV3 model...
+2025-09-12 16:41:37,030 [INFO] main: Loading DeepLabV3 model...
+2025-09-12 16:41:43,732 [INFO] main: Loading DeepLabV3 model...
+2025-09-12 16:41:53,008 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-12 16:42:53,449 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-12 16:43:04,954 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 13:51:28,390 [INFO] main: Loading DeepLabV3 model...
+2025-09-13 13:52:29,456 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 13:52:29,636 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 13:52:40,362 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 13:52:40,531 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 13:53:51,244 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 13:54:01,696 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:08:48,889 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:08:48,966 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:12:42,617 [INFO] main: Loading DeepLabV3 model...
+2025-09-13 14:16:13,398 [INFO] main: Cleaned up old file: 8b182ea765184c58a4511afc7478d23b_20250902_005735.jpg
+2025-09-13 14:16:13,399 [INFO] main: Cleaned up old file: 8b182ea765184c58a4511afc7478d23b_20250902_005735_mask.png
+2025-09-13 14:16:50,823 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:17:03,755 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:17:41,905 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:17:49,907 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:24:15,865 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:24:28,313 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:25:22,730 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:25:34,676 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:25:51,751 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:25:51,839 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:26:03,476 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:26:04,616 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:30:28,834 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:30:29,534 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:30:41,790 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:30:41,987 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:39:25,748 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:39:25,841 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:39:35,238 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 14:39:35,296 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-13 23:52:34,087 [INFO] main: Loading DeepLabV3 model...
+2025-09-13 23:52:36,025 [ERROR] main: Failed to load model: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>
+2025-09-13 23:52:36,026 [ERROR] main: Startup failed: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)>
+2025-09-15 20:24:15,388 [INFO] main: Loading DeepLabV3 model...
+2025-09-15 20:24:17,271 [ERROR] main: Failed to load model: <urlopen error [Errno 11001] getaddrinfo failed>
+2025-09-15 20:24:17,273 [ERROR] main: Startup failed: <urlopen error [Errno 11001] getaddrinfo failed>
+2025-09-15 20:44:50,852 [INFO] main: Loading DeepLabV3 model...
+2025-09-15 20:44:52,452 [ERROR] main: Failed to load model: <urlopen error [Errno 11001] getaddrinfo failed>
+2025-09-15 20:44:52,452 [ERROR] main: Startup failed: <urlopen error [Errno 11001] getaddrinfo failed>
+2025-09-15 22:23:14,679 [INFO] main: Loading DeepLabV3 model...
+2025-09-15 22:23:16,278 [ERROR] main: Failed to load model: <urlopen error [Errno 11001] getaddrinfo failed>
+2025-09-15 22:23:16,278 [ERROR] main: Startup failed: <urlopen error [Errno 11001] getaddrinfo failed>
+2025-09-15 23:46:14,000 [INFO] main: Loading DeepLabV3 model...
+2025-09-17 19:08:48,260 [INFO] main: Loading DeepLabV3 model...
+2025-09-17 19:09:17,907 [INFO] main: Cleaned up old file: 3187d0dc6c84429ba19b90adc8d5cfff_20250913_142503.jpg
+2025-09-17 19:09:17,936 [INFO] main: Cleaned up old file: 5f6f277d10904eb5b3fb014e2e71afbb_20250913_141612.jpg
+2025-09-17 19:09:17,937 [INFO] main: Cleaned up old file: 3187d0dc6c84429ba19b90adc8d5cfff_20250913_142503_mask.png
+2025-09-17 19:09:17,938 [INFO] main: Cleaned up old file: 5f6f277d10904eb5b3fb014e2e71afbb_20250913_141612_mask.png
+2025-09-17 19:10:10,808 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 19:10:34,232 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 19:12:27,610 [ERROR] main: OpenRouter error: 
+2025-09-17 19:12:31,392 [ERROR] main: OpenRouter error: 
+2025-09-17 19:14:01,344 [ERROR] main: OpenRouter error: 
+2025-09-17 19:14:30,473 [ERROR] main: OpenRouter error: 
+2025-09-17 19:14:55,157 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-17 19:14:55,746 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-17 19:14:57,718 [ERROR] main: OpenRouter error: All connection attempts failed
+2025-09-17 19:15:12,027 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-17 19:15:12,538 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-17 19:15:34,164 [ERROR] main: OpenRouter error: 
+2025-09-17 19:20:30,490 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-17 19:20:42,476 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-17 19:23:38,696 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-17 19:23:46,389 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-17 19:29:05,855 [INFO] main: Loading DeepLabV3 model...
+2025-09-17 19:30:00,265 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 19:30:09,514 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 19:31:04,516 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 19:31:28,825 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 19:31:31,637 [ERROR] main: OpenRouter error: Unterminated string starting at: line 8 column 7 (char 304)
+2025-09-17 19:37:18,065 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 19:38:59,871 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 19:39:10,684 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 19:44:31,693 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 19:44:45,401 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 19:44:58,869 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 19:45:12,531 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 22:18:42,410 [INFO] main: Loading DeepLabV3 model...
+2025-09-17 22:19:40,139 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 22:19:50,526 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 22:21:09,946 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 22:21:22,227 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 22:21:56,499 [INFO] main: Cleaned up old file: 1e7c68442ded464ebaa66ca458f68096_20250917_190910.jpg
+2025-09-17 22:21:56,500 [INFO] main: Cleaned up old file: 1e7c68442ded464ebaa66ca458f68096_20250917_190910_mask.png
+2025-09-17 22:22:07,048 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 22:22:19,725 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 22:23:02,567 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 22:23:02,585 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 22:23:13,236 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 22:23:17,783 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 22:25:59,049 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 22:25:59,280 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 22:26:12,570 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-17 22:26:14,253 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-18 10:02:09,845 [INFO] main: Loading DeepLabV3 model...
+2025-09-18 10:03:01,241 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:03:01,493 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:03:02,516 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:03:02,538 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:03:48,124 [INFO] main: Cleaned up old file: b8118dd4beb64d1fbc47465f6496073d_20250917_222149.jpg
+2025-09-18 10:03:48,127 [INFO] main: Cleaned up old file: b8118dd4beb64d1fbc47465f6496073d_20250917_222149_mask.png
+2025-09-18 10:04:09,818 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:04:10,402 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:05:34,551 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:05:35,013 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:05:44,954 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:05:45,003 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:05:45,920 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:05:45,942 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:06:07,418 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:06:07,987 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:15:58,016 [INFO] main: Loading DeepLabV3 model...
+2025-09-18 10:17:32,081 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-18 10:17:33,137 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-18 10:17:34,525 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-18 10:18:04,535 [ERROR] main: OpenRouter error: Server disconnected without sending a response.
+2025-09-18 10:18:05,750 [ERROR] main: OpenRouter error: 
+2025-09-18 10:18:18,750 [ERROR] main: OpenRouter error: 
+2025-09-18 10:18:55,269 [ERROR] main: OpenRouter error: All connection attempts failed
+2025-09-18 10:18:55,291 [ERROR] main: OpenRouter error: All connection attempts failed
+2025-09-18 10:18:55,311 [ERROR] main: OpenRouter error: All connection attempts failed
+2025-09-18 10:19:15,018 [ERROR] main: OpenRouter error: 
+2025-09-18 10:19:15,037 [ERROR] main: OpenRouter error: 
+2025-09-18 10:19:15,375 [ERROR] main: OpenRouter error: 
+2025-09-18 10:19:56,931 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-18 10:20:12,538 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-18 10:23:25,874 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:23:25,895 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:23:25,917 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:23:25,938 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:23:45,878 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:23:45,899 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:23:45,920 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:23:45,941 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:30:51,064 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:30:51,574 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:32:57,046 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:33:05,815 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:38:53,106 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:38:53,139 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:38:53,160 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:38:53,178 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:39:13,095 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:39:13,115 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:39:13,136 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:39:13,156 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:40:03,208 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:40:03,677 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:41:48,094 [ERROR] main: OpenRouter error: 
+2025-09-18 10:41:53,357 [ERROR] main: OpenRouter error: 
+2025-09-18 10:42:04,186 [ERROR] main: OpenRouter error: 
+2025-09-18 10:42:13,718 [ERROR] main: OpenRouter error: 
+2025-09-18 10:42:30,214 [ERROR] main: OpenRouter error: 
+2025-09-18 10:42:46,643 [ERROR] main: OpenRouter error: 
+2025-09-18 10:42:50,218 [ERROR] main: OpenRouter error: 
+2025-09-18 10:42:54,979 [ERROR] main: OpenRouter error: 
+2025-09-18 10:52:54,858 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:52:55,346 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 10:54:55,770 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-18 10:57:16,077 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-18 10:57:29,537 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-18 11:12:59,557 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-18 11:13:00,041 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-18 11:13:15,474 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-18 11:13:18,200 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-18 11:16:35,694 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:16:35,714 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:20:13,887 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:20:13,906 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:20:14,809 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:20:14,827 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:21:22,171 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:21:22,190 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:21:23,050 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:21:23,068 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:21:26,061 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:21:26,080 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:21:26,924 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:21:26,943 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:21:29,553 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:21:30,039 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:21:33,794 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:21:34,663 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:21:34,682 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:21:35,153 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:21:39,040 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:21:39,479 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:23:00,776 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:23:00,796 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:23:01,647 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:23:01,665 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:28:25,213 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:28:25,232 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:29:42,472 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:29:42,491 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:32:12,503 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:32:12,521 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:32:13,399 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 11:32:13,417 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 12:02:43,376 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 12:02:43,423 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 12:02:44,335 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 12:02:44,354 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 12:03:28,684 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 12:03:28,704 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 12:03:29,659 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 12:03:29,677 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 12:04:02,712 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 12:04:03,218 [ERROR] main: OpenRouter error: [Errno 11001] getaddrinfo failed
+2025-09-18 14:45:34,698 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-18 14:45:34,982 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-18 14:45:55,964 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-18 14:45:56,530 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-09-18 14:47:11,786 [INFO] main: Cleaned up old file: 0ab296d023db437eb80fec3492d58047_20250918_105708.jpg
+2025-09-18 14:47:11,787 [INFO] main: Cleaned up old file: 4d776e3de6c843919ee94413c1beacab_20250918_100342.jpg
+2025-09-18 14:47:11,788 [INFO] main: Cleaned up old file: bbc2109eeb514bb59f9458198e5a2b46_20250918_101936.jpg
+2025-09-18 14:47:11,788 [INFO] main: Cleaned up old file: d317600f87424c178a36f769d089cdb5_20250918_105243.jpg
+2025-09-18 14:47:11,790 [INFO] main: Cleaned up old file: 0ab296d023db437eb80fec3492d58047_20250918_105708_mask.png
+2025-09-18 14:47:11,790 [INFO] main: Cleaned up old file: 4d776e3de6c843919ee94413c1beacab_20250918_100342_mask.png
+2025-09-18 14:47:11,791 [INFO] main: Cleaned up old file: bbc2109eeb514bb59f9458198e5a2b46_20250918_101936_mask.png
+2025-09-18 14:47:11,793 [INFO] main: Cleaned up old file: d317600f87424c178a36f769d089cdb5_20250918_105243_mask.png
+2025-09-18 14:47:27,908 [ERROR] main: OpenRouter error: 
+2025-09-18 14:47:54,323 [ERROR] main: OpenRouter error: Server disconnected without sending a response.
+2025-10-30 20:12:56,597 [INFO] main: Loading DeepLabV3 model...
+2025-10-30 20:14:01,781 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-30 20:14:01,782 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-30 20:14:15,710 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-30 20:14:16,098 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-30 20:27:03,855 [INFO] main: Cleaned up old file: 9f9690ff1e694af69371c68605e0af2d_20250918_144705.jpg
+2025-10-30 20:27:03,856 [INFO] main: Cleaned up old file: 9f9690ff1e694af69371c68605e0af2d_20250918_144705_mask.png
+2025-10-31 00:01:35,463 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-31 00:01:35,569 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-31 00:01:46,123 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-31 00:01:53,277 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+2025-10-31 00:02:05,156 [INFO] main: Cleaned up old file: 0576d0757ac34f5bbf8cca22b2d88041_20251030_204604.jpg
+2025-10-31 00:02:05,157 [INFO] main: Cleaned up old file: 0dc07b5532c34ec1988423e27f11e99c_20251030_204705.jpg
+2025-10-31 00:02:05,157 [INFO] main: Cleaned up old file: 0e367fcd2dfc4743a607018b4d430e79_20251030_202720.jpg
+2025-10-31 00:02:05,158 [INFO] main: Cleaned up old file: 1446d1e28dae44cda8e9c7b7bd481f94_20251030_202701.jpg
+2025-10-31 00:02:05,158 [INFO] main: Cleaned up old file: 7f6270ee65a44bd1834f9abc17a73b90_20251030_203433.jpg
+2025-10-31 00:02:05,159 [INFO] main: Cleaned up old file: c1968e6f34a9400f96f673e6833e80f9_20251030_203635.jpg
+2025-10-31 00:02:05,159 [INFO] main: Cleaned up old file: c6afd0fda82f4a1d94eff2db9d9da18b_20251030_204700.jpg
+2025-10-31 00:02:05,160 [INFO] main: Cleaned up old file: 0576d0757ac34f5bbf8cca22b2d88041_20251030_204604_mask.png
+2025-10-31 00:02:05,161 [INFO] main: Cleaned up old file: 0dc07b5532c34ec1988423e27f11e99c_20251030_204705_mask.png
+2025-10-31 00:02:05,161 [INFO] main: Cleaned up old file: 0e367fcd2dfc4743a607018b4d430e79_20251030_202720_mask.png
+2025-10-31 00:02:05,162 [INFO] main: Cleaned up old file: 1446d1e28dae44cda8e9c7b7bd481f94_20251030_202701_mask.png
+2025-10-31 00:02:05,163 [INFO] main: Cleaned up old file: 7f6270ee65a44bd1834f9abc17a73b90_20251030_203433_mask.png
+2025-10-31 00:02:05,163 [INFO] main: Cleaned up old file: c1968e6f34a9400f96f673e6833e80f9_20251030_203635_mask.png
+2025-10-31 00:02:05,164 [INFO] main: Cleaned up old file: c6afd0fda82f4a1d94eff2db9d9da18b_20251030_204700_mask.png
