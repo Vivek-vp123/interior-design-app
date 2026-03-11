@@ -361,3 +361,120 @@ NameError: name 'suggestions' is not defined
 2025-10-31 00:02:05,163 [INFO] main: Cleaned up old file: 7f6270ee65a44bd1834f9abc17a73b90_20251030_203433_mask.png
 2025-10-31 00:02:05,163 [INFO] main: Cleaned up old file: c1968e6f34a9400f96f673e6833e80f9_20251030_203635_mask.png
 2025-10-31 00:02:05,164 [INFO] main: Cleaned up old file: c6afd0fda82f4a1d94eff2db9d9da18b_20251030_204700_mask.png
+2025-11-17 13:37:26,637 [INFO] main: Loading DeepLabV3 model...
+2025-11-17 13:40:36,757 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:40:36,758 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:40:36,808 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:40:36,809 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:40:38,473 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:40:38,475 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:40:39,588 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:40:39,595 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:42:44,988 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:42:44,989 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:42:45,193 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:42:45,194 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:42:45,924 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:42:45,925 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:42:46,508 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:42:46,509 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:42:57,819 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:42:57,821 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:42:58,974 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:42:58,975 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:43:04,338 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:43:04,339 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:43:05,411 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:43:05,411 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:44:16,749 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:44:16,750 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:44:16,776 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:44:16,777 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:44:17,953 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:44:17,954 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:44:17,968 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:44:17,970 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:53:53,393 [INFO] main: Loading DeepLabV3 model...
+2025-11-17 13:54:57,276 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:54:57,276 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:54:57,298 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:54:57,302 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:54:59,313 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:54:59,313 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:54:59,326 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:54:59,327 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:55:05,376 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:55:05,377 [ERROR] main: OpenRouter error: 'choices'
+2025-11-17 13:55:06,824 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2025-11-17 13:55:06,825 [ERROR] main: OpenRouter error: 'choices'
+2026-03-11 15:03:11,889 [INFO] main: Loading DeepLabV3 model...
+2026-03-11 15:07:12,702 [INFO] main:  Using device: cpu
+2026-03-11 15:07:12,764 [INFO] main: Loading DeepLabV3 model...
+2026-03-11 15:07:28,281 [INFO] main:  Using device: cpu
+2026-03-11 15:07:28,322 [INFO] main: Loading DeepLabV3 model...
+2026-03-11 15:09:14,048 [INFO] main:  Using device: cpu
+2026-03-11 15:09:14,084 [INFO] main: [START] Starting Interior Design AI Segmentation Service...
+2026-03-11 15:09:14,084 [INFO] main: Loading DeepLabV3 model...
+2026-03-11 15:09:14,822 [INFO] main: [OK] Model loaded and warmed up
+2026-03-11 15:09:14,823 [INFO] main: [OK] Service ready!
+2026-03-11 15:09:38,415 [INFO] main: [STOP] Shutting down service...
+2026-03-11 15:09:38,415 [INFO] main: [OK] Service stopped
+2026-03-11 15:09:43,133 [INFO] main:  Using device: cpu
+2026-03-11 15:09:43,167 [INFO] main: [START] Starting Interior Design AI Segmentation Service...
+2026-03-11 15:09:43,167 [INFO] main: Loading DeepLabV3 model...
+2026-03-11 15:09:43,857 [INFO] main: [OK] Model loaded and warmed up
+2026-03-11 15:09:43,857 [INFO] main: [OK] Service ready!
+2026-03-11 15:09:43,972 [INFO] main: [STOP] Shutting down service...
+2026-03-11 15:09:43,973 [INFO] main: [OK] Service stopped
+2026-03-11 15:09:51,253 [INFO] main:  Using device: cpu
+2026-03-11 15:09:51,282 [INFO] main: [START] Starting Interior Design AI Segmentation Service...
+2026-03-11 15:09:51,282 [INFO] main: Loading DeepLabV3 model...
+2026-03-11 15:09:51,948 [INFO] main: [OK] Model loaded and warmed up
+2026-03-11 15:09:51,949 [INFO] main: [OK] Service ready!
+2026-03-11 15:13:28,380 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-03-11 15:13:28,382 [ERROR] main: OpenRouter error: 'choices'
+2026-03-11 15:13:28,382 [WARNING] main: [WARN] Falling back to static catalog
+2026-03-11 15:13:28,383 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-03-11 15:13:28,384 [ERROR] main: OpenRouter error: 'choices'
+2026-03-11 15:13:28,384 [WARNING] main: [WARN] Falling back to static catalog
+2026-03-11 15:13:29,591 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-03-11 15:13:29,593 [ERROR] main: OpenRouter error: 'choices'
+2026-03-11 15:13:29,593 [WARNING] main: [WARN] Falling back to static catalog
+2026-03-11 15:13:29,753 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-03-11 15:13:29,755 [ERROR] main: OpenRouter error: 'choices'
+2026-03-11 15:13:29,756 [WARNING] main: [WARN] Falling back to static catalog
+2026-03-11 15:13:47,659 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-03-11 15:13:47,661 [ERROR] main: OpenRouter error: 'choices'
+2026-03-11 15:13:47,662 [WARNING] main: [WARN] Falling back to static catalog
+2026-03-11 15:13:48,270 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-03-11 15:13:48,271 [ERROR] main: OpenRouter error: 'choices'
+2026-03-11 15:13:48,271 [WARNING] main: [WARN] Falling back to static catalog
+2026-03-11 16:25:04,284 [INFO] main:  Using device: cpu
+2026-03-11 16:25:04,348 [INFO] main: [START] Starting Interior Design AI Segmentation Service...
+2026-03-11 16:25:04,348 [INFO] main: Loading DeepLabV3 model...
+2026-03-11 16:25:05,374 [INFO] main: [OK] Model loaded and warmed up
+2026-03-11 16:25:05,375 [INFO] main: [OK] Service ready!
+2026-03-11 16:27:27,250 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-03-11 16:27:27,251 [ERROR] main: OpenRouter error: 'choices'
+2026-03-11 16:27:27,252 [WARNING] main: [WARN] Falling back to static catalog
+2026-03-11 16:27:27,492 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-03-11 16:27:27,494 [ERROR] main: OpenRouter error: 'choices'
+2026-03-11 16:27:27,494 [WARNING] main: [WARN] Falling back to static catalog
+2026-03-11 16:27:29,437 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-03-11 16:27:29,439 [ERROR] main: OpenRouter error: 'choices'
+2026-03-11 16:27:29,440 [WARNING] main: [WARN] Falling back to static catalog
+2026-03-11 16:27:29,829 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-03-11 16:27:29,831 [ERROR] main: OpenRouter error: 'choices'
+2026-03-11 16:27:29,831 [WARNING] main: [WARN] Falling back to static catalog
+2026-03-11 16:27:41,772 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-03-11 16:27:41,775 [ERROR] main: OpenRouter error: 'choices'
+2026-03-11 16:27:41,776 [WARNING] main: [WARN] Falling back to static catalog
+2026-03-11 16:27:43,576 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-03-11 16:27:43,577 [ERROR] main: OpenRouter error: 'choices'
+2026-03-11 16:27:43,577 [WARNING] main: [WARN] Falling back to static catalog
+2026-03-11 16:28:29,125 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-03-11 16:28:29,127 [ERROR] main: OpenRouter error: 'choices'
+2026-03-11 16:28:29,127 [WARNING] main: [WARN] Falling back to static catalog
+2026-03-11 16:28:30,206 [INFO] httpx: HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+2026-03-11 16:28:30,207 [ERROR] main: OpenRouter error: 'choices'
+2026-03-11 16:28:30,207 [WARNING] main: [WARN] Falling back to static catalog

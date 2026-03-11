@@ -32,7 +32,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler("segmentation_service.log")
+        logging.FileHandler("segmentation_service.log", encoding="utf-8")
     ]
 )
 logger = logging.getLogger(__name__)
@@ -81,7 +81,7 @@ executor = ThreadPoolExecutor(max_workers=4)
 # Device Configuration
 # -----------------------------
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-logger.info(f"🔥 Using device: {device}")
+logger.info(f" Using device: {device}")
 
 if torch.cuda.is_available():
     logger.info(f"GPU: {torch.cuda.get_device_name(0)}")
@@ -155,7 +155,7 @@ def load_model():
             with torch.no_grad():
                 _ = model(dummy_input)
             
-            logger.info("✅ Model loaded and warmed up")
+            logger.info("[OK] Model loaded and warmed up")
         except Exception as e:
             logger.error(f"Failed to load model: {e}")
             raise
@@ -392,7 +392,7 @@ async def segment_image(
         return JSONResponse(content=response)
         
     except torch.cuda.OutOfMemoryError:
-        logger.error("⚠️ GPU out of memory, attempting CPU fallback...")
+        logger.error("[WARN] GPU out of memory, attempting CPU fallback...")
         torch.cuda.empty_cache()
         
         # Switch to CPU
@@ -472,7 +472,7 @@ async def generate_suggestions(request: dict):
 
         # --- If AI failed, fallback to static ---
         if not suggestions:
-            logger.warning("⚠️ Falling back to static catalog")
+            logger.warning("[WARN] Falling back to static catalog")
             suggestions = [
                 {
                     "name": "Indoor Plant Set",
@@ -638,12 +638,12 @@ async def health_check():
 @app.on_event("startup")
 async def startup_event():
     """Initialize service on startup"""
-    logger.info("🚀 Starting Interior Design AI Segmentation Service...")
+    logger.info("[START] Starting Interior Design AI Segmentation Service...")
     
     try:
         # Pre-load model
         load_model()
-        logger.info("✅ Service ready!")
+        logger.info("[OK] Service ready!")
         
     except Exception as e:
         logger.error(f"Startup failed: {e}")
@@ -652,13 +652,13 @@ async def startup_event():
 @app.on_event("shutdown")
 async def shutdown_event():
     """Cleanup on shutdown"""
-    logger.info("🛑 Shutting down service...")
+    logger.info("[STOP] Shutting down service...")
     
     # Clear GPU cache if using CUDA
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
     
-    logger.info("✅ Service stopped")
+    logger.info("[OK] Service stopped")
 
 # -----------------------------
 # Run the service

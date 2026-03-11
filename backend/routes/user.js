@@ -17,10 +17,9 @@ router.get("/me", auth, async (req, res) => {
   }
 });
 
-module.exports = router;
-// GET /api/user/catalog
 const path = require('path');
 const fs = require('fs');
+
 router.get('/catalog', async (req, res) => {
   try {
     const catalogPath = path.join(__dirname, '../data/catalog.json');
@@ -31,3 +30,5 @@ router.get('/catalog', async (req, res) => {
     res.status(500).json({ error: 'Failed to load catalog.' });
   }
 });
+
+module.exports = router;

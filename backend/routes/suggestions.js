@@ -110,27 +110,27 @@ async function generateFallbackSuggestions(room) {
   };
 
   // Add suggestions based on detected objects
-  const imgUrl = await fetchUnsplashImage(sugg.name);
-  objects.forEach(obj => {
+  for (const obj of objects) {
     const objSuggestions = objectMap[obj.class] || objectMap[obj.type];
     
     if (objSuggestions) {
-      objSuggestions.forEach((sugg, idx) => {
+      for (const [idx, sugg] of objSuggestions.entries()) {
+        const imgUrl = await fetchUnsplashImage(sugg.name);
         suggestions.push({
-          id: `fallback-${room._id}-${obj.class}-${idx}`,
+          id: `fallback-${room._id}-${obj.class || obj.type}-${idx}`,
           title: sugg.name,
           desc: sugg.reason,
           price: "$" + Math.floor(Math.random() * 300 + 50),
           category: sugg.category,
-          confidence: Math.max(70, Math.floor(obj.confidence * 100) - 10),
-          imageUrl: imgUrl || "https://via.placeholder.com/400x300?text=No+Image",
+          confidence: Math.max(70, Math.floor((obj.confidence || 0.9) * 100) - 10),
+          imageUrl: imgUrl || `https://via.placeholder.com/400x300?text=${encodeURIComponent(sugg.name)}`,
           colorTags: colors.slice(0, 3),
           aiGenerated: false,
           reason: sugg.reason
         });
-      });
+      }
     }
-  });
+  }
 
   // Color scheme based suggestions
   if (colorScheme === "Warm") {
@@ -147,6 +147,7 @@ async function generateFallbackSuggestions(room) {
       reason: "Creates visual balance in warm spaces"
     });
   } else if (colorScheme === "Cool") {
+    const imgUrl = await fetchUnsplashImage("wood furniture");
     suggestions.push({
       id: `fallback-${room._id}-cool-1`,
       title: "Warm Wood Furniture",
@@ -154,25 +155,26 @@ async function generateFallbackSuggestions(room) {
       price: "$299",
       category: "Furniture",
       confidence: 85,
-      image: "https://source.unsplash.com/400x300/?wood,furniture",
+      imageUrl: imgUrl || "https://via.placeholder.com/400x300?text=Wood+Furniture",
       colorTags: ["#8B4513", "#D2691E"],
       reason: "Brings warmth to cool color schemes"
     });
   }
 
   // Always suggest plants if not detected
-  if (!objects.find(o => o.class === 'potted plant')) {
+  if (!objects.find(o => (o.class === 'potted plant' || o.type === 'potted plant'))) {
+    const imgUrl = await fetchUnsplashImage("indoor plant");
     suggestions.push({
       id: `fallback-${room._id}-plant`,
-      title: sugg.name,
-      desc: sugg.reason,
-      price: "$" + Math.floor(Math.random() * 300 + 50),
-      category: sugg.category,
-      confidence: Math.max(70, Math.floor(obj.confidence * 100) - 10),
-      imageUrl: `https://source.unsplash.com/400x300/?${encodeURIComponent(sugg.name)}`,
+      title: "Indoor Potted Plant",
+      desc: "Bring life to your space with natural greenery",
+      price: "$" + Math.floor(Math.random() * 150 + 20),
+      category: "Decor",
+      confidence: 85,
+      imageUrl: imgUrl || "https://via.placeholder.com/400x300?text=Plant",
       colorTags: colors.slice(0, 3),
       aiGenerated: false,
-      reason: sugg.reason
+      reason: "Adds freshness to any room"
     });
   }
 
