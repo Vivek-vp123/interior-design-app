@@ -214,17 +214,17 @@ export default function Dashboard() {
           <div className="space-y-4">
             <div className="flex items-center gap-4 text-sm">
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <span className="text-gray-600">New design created for "Living Room"</span>
+              <span className="text-gray-600">New design created for &quot;Living Room&quot;</span>
               <span className="text-gray-400 ml-auto">2 hours ago</span>
             </div>
             <div className="flex items-center gap-4 text-sm">
               <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <span className="text-gray-600">Room "Master Bedroom" uploaded</span>
+              <span className="text-gray-600">Room &quot;Master Bedroom&quot; uploaded</span>
               <span className="text-gray-400 ml-auto">5 hours ago</span>
             </div>
             <div className="flex items-center gap-4 text-sm">
               <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-              <span className="text-gray-600">AI suggestions generated for "Kitchen"</span>
+              <span className="text-gray-600">AI suggestions generated for &quot;Kitchen&quot;</span>
               <span className="text-gray-400 ml-auto">1 day ago</span>
             </div>
           </div>

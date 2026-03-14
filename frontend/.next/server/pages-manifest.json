@@ -1,8 +1,21 @@
 {
-  "/_app": "pages/_app.js",
+  "/api/hello": "pages/api/hello.js",
+  "/ar": "pages/ar.html",
+  "/auth/forgot-password": "pages/auth/forgot-password.html",
+  "/auth/login": "pages/auth/login.html",
   "/_error": "pages/_error.js",
+  "/dashboard": "pages/dashboard.html",
+  "/demo": "pages/demo.html",
+  "/_app": "pages/_app.js",
+  "/privacy": "pages/privacy.html",
+  "/reports": "pages/reports.html",
+  "/rooms": "pages/rooms.html",
+  "/suggestions": "pages/suggestions.html",
+  "/terms": "pages/terms.html",
+  "/upload": "pages/upload.html",
+  "/visualizer": "pages/visualizer.html",
   "/_document": "pages/_document.js",
-  "/visualizer": "pages/visualizer.js",
-  "/suggestions": "pages/suggestions.js",
-  "/ar": "pages/ar.js"
+  "/auth/signup": "pages/auth/signup.html",
+  "/": "pages/index.html",
+  "/404": "pages/404.html"
 }

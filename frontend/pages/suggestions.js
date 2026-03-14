@@ -377,7 +377,7 @@ const fetchSuggestions = async (roomId) => {
               </div>
               <h3 className="text-lg font-medium text-gray-900 mb-2">No suggestions available</h3>
               <p className="text-gray-500 mb-6">
-                We couldn't find any matching items for this room. Try uploading a different room or check back later as we update our catalog.
+                We couldn&apos;t find any matching items for this room. Try uploading a different room or check back later as we update our catalog.
               </p>
               <button
                 onClick={() => router.push("/upload")}
