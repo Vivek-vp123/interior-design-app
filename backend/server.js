@@ -14,12 +14,37 @@ const suggestionsRoutes = require("./routes/suggestions");
 const app = express();
 const PORT = Number(process.env.PORT) || 5000;
 const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/interior_design";
-const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || "http://localhost:3000";
+
+function normalizeOrigin(origin) {
+  const value = String(origin || "").trim().replace(/\/+$/, "");
+  if (!value) return null;
+  if (value.startsWith("http://") || value.startsWith("https://")) {
+    return value;
+  }
+  return `https://${value}`;
+}
+
+const allowedOrigins = String(process.env.FRONTEND_ORIGIN || "http://localhost:3000")
+  .split(",")
+  .map((o) => normalizeOrigin(o))
+  .filter(Boolean);
+
+console.log("CORS allowed origins:", allowedOrigins);
 
 app.use(express.json());
 app.use(
   cors({
-    origin: FRONTEND_ORIGIN,
+    origin(origin, callback) {
+      // Allow non-browser or same-origin server requests.
+      if (!origin) return callback(null, true);
+
+      const normalizedRequestOrigin = normalizeOrigin(origin);
+      if (allowedOrigins.includes(normalizedRequestOrigin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error(`CORS blocked for origin: ${origin}`));
+    },
     credentials: true,
   })
 );
