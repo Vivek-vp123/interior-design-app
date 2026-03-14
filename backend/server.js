@@ -65,11 +65,13 @@ app.get("/outputs/:file", async (req, res) => {
 });
 
 mongoose
-  .connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(MONGO_URI)
   .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("MongoDB error:", err));
+  .catch((err) => {
+    console.error("MongoDB connection error:", err.message);
+    console.error(
+      "Check MONGO_URI, Atlas network access allowlist, and database user credentials."
+    );
+  });
 
 app.listen(PORT, () => console.log(`Backend running on http://localhost:${PORT}`));
