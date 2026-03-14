@@ -10,7 +10,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from torchvision import transforms
-from torchvision.models.segmentation import deeplabv3_resnet50
+from torchvision.models.segmentation import (
+    deeplabv3_resnet50,
+    lraspp_mobilenet_v3_large,
+    DeepLabV3_ResNet50_Weights,
+    LRASPP_MobileNet_V3_Large_Weights,
+)
 from typing import Dict, List, Tuple, Optional
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
@@ -70,18 +75,24 @@ app.add_middleware(
 # -----------------------------
 # Configuration & Constants
 # -----------------------------
-MAX_IMAGE_SIZE = 1024  # Max dimension for processing
+# Keep defaults conservative for 512MB free-tier environments.
+MAX_IMAGE_SIZE = int(os.getenv("MAX_IMAGE_SIZE", "768"))
 SUPPORTED_FORMATS = {".jpg", ".jpeg", ".png", ".webp"}
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
+MODEL_VARIANT = os.getenv("SEGMENTATION_MODEL", "lraspp").strip().lower()
+PRELOAD_MODEL = os.getenv("PRELOAD_MODEL", "false").strip().lower() == "true"
 
 # Thread pool for CPU-intensive tasks
-executor = ThreadPoolExecutor(max_workers=4)
+executor = ThreadPoolExecutor(max_workers=1)
 
 # -----------------------------
 # Device Configuration
 # -----------------------------
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 logger.info(f" Using device: {device}")
+
+# Keep CPU thread count small to reduce memory pressure on free instances.
+torch.set_num_threads(int(os.getenv("TORCH_NUM_THREADS", "1")))
 
 if torch.cuda.is_available():
     logger.info(f"GPU: {torch.cuda.get_device_name(0)}")
@@ -144,18 +155,21 @@ def load_model():
     """Load and cache the segmentation model"""
     global model
     if model is None:
-        logger.info("Loading DeepLabV3 model...")
+        logger.info(f"Loading segmentation model variant: {MODEL_VARIANT}")
         try:
-            model = deeplabv3_resnet50(weights="COCO_WITH_VOC_LABELS_V1")
+            if MODEL_VARIANT in {"deeplab", "deeplabv3", "resnet50"}:
+                model = deeplabv3_resnet50(
+                    weights=DeepLabV3_ResNet50_Weights.COCO_WITH_VOC_LABELS_V1
+                )
+            else:
+                # Default to a lighter model for free-tier memory constraints.
+                model = lraspp_mobilenet_v3_large(
+                    weights=LRASPP_MobileNet_V3_Large_Weights.COCO_WITH_VOC_LABELS_V1
+                )
+
             model = model.to(device)
             model.eval()
-            
-            # Warm up the model
-            dummy_input = torch.randn(1, 3, 224, 224).to(device)
-            with torch.no_grad():
-                _ = model(dummy_input)
-            
-            logger.info("[OK] Model loaded and warmed up")
+            logger.info("[OK] Model loaded")
         except Exception as e:
             logger.error(f"Failed to load model: {e}")
             raise
@@ -610,27 +624,13 @@ async def analyze_room(room_id: str):
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
-    try:
-        # Check if model can be loaded
-        model = load_model()
-        model_status = "ready" if model is not None else "not loaded"
-        
-        return {
-            "status": "healthy",
-            "model": model_status,
-            "device": str(device),
-            "timestamp": datetime.now().isoformat()
-        }
-        
-    except Exception as e:
-        return JSONResponse(
-            status_code=503,
-            content={
-                "status": "unhealthy",
-                "error": str(e),
-                "timestamp": datetime.now().isoformat()
-            }
-        )
+    return {
+        "status": "healthy",
+        "model": "loaded" if model is not None else "lazy-not-loaded",
+        "model_variant": MODEL_VARIANT,
+        "device": str(device),
+        "timestamp": datetime.now().isoformat(),
+    }
 
 # -----------------------------
 # Startup Events
@@ -640,14 +640,14 @@ async def startup_event():
     """Initialize service on startup"""
     logger.info("[START] Starting Interior Design AI Segmentation Service...")
     
-    try:
-        # Pre-load model
-        load_model()
-        logger.info("[OK] Service ready!")
-        
-    except Exception as e:
-        logger.error(f"Startup failed: {e}")
-        # Don't raise - let service start anyway
+    if PRELOAD_MODEL:
+        try:
+            load_model()
+            logger.info("[OK] Model preloaded")
+        except Exception as e:
+            logger.error(f"Model preload failed: {e}")
+
+    logger.info("[OK] Service ready!")
 
 @app.on_event("shutdown")
 async def shutdown_event():
