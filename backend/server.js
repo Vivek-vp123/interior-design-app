@@ -29,7 +29,13 @@ const allowedOrigins = String(process.env.FRONTEND_ORIGIN || "http://localhost:3
   .map((o) => normalizeOrigin(o))
   .filter(Boolean);
 
+const allowedOriginSuffixes = String(process.env.FRONTEND_ORIGIN_SUFFIXES || ".vercel.app")
+  .split(",")
+  .map((s) => s.trim().toLowerCase())
+  .filter(Boolean);
+
 console.log("CORS allowed origins:", allowedOrigins);
+console.log("CORS allowed origin suffixes:", allowedOriginSuffixes);
 
 app.use(express.json());
 app.use(
@@ -41,6 +47,18 @@ app.use(
       const normalizedRequestOrigin = normalizeOrigin(origin);
       if (allowedOrigins.includes(normalizedRequestOrigin)) {
         return callback(null, true);
+      }
+
+      try {
+        const requestHost = new URL(normalizedRequestOrigin).hostname.toLowerCase();
+        const isSuffixAllowed = allowedOriginSuffixes.some((suffix) =>
+          requestHost.endsWith(suffix)
+        );
+        if (isSuffixAllowed) {
+          return callback(null, true);
+        }
+      } catch {
+        // Fall through to blocked error
       }
 
       return callback(new Error(`CORS blocked for origin: ${origin}`));
