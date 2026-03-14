@@ -4,6 +4,7 @@ import API from "../lib/api";
 import Layout from "../components/Layout";
 
 export default function Upload() {
+  const FILES_BASE = process.env.NEXT_PUBLIC_FILES_URL || "http://localhost:5000";
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [rooms, setRooms] = useState([]);
@@ -37,14 +38,19 @@ export default function Upload() {
         }
       });
 
-      setRooms([res.data, ...rooms]);
+      const uploadedRoom = res?.data?.data || res?.data;
+      if (!uploadedRoom?._id) {
+        throw new Error("Upload succeeded but room payload was invalid");
+      }
+
+      setRooms((prev) => [uploadedRoom, ...prev]);
       setFile(null);
       setPreview(null);
       setUploadProgress(0);
       
       // Show success message
       setTimeout(() => {
-        router.push(`/suggestions?roomId=${res.data._id}`);
+        router.push(`/suggestions?roomId=${uploadedRoom._id}`);
       }, 1000);
     } catch (err) {
       setError(err.response?.data?.msg || "Upload failed. Please try again.");
@@ -285,7 +291,7 @@ export default function Upload() {
                 >
                   <div className="relative aspect-w-16 aspect-h-10">
                     <img
-                      src={`${process.env.NEXT_PUBLIC_FILES_URL}${room.filePath}`}
+                      src={`${FILES_BASE}${room.filePath}`}
                       alt={room.originalName}
                       className="w-full h-48 object-cover"
                     />

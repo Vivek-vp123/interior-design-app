@@ -5,6 +5,7 @@ import API from "../lib/api";
 import Layout from "../components/Layout";
 
 export default function Rooms() {
+  const FILES_BASE = process.env.NEXT_PUBLIC_FILES_URL || "http://localhost:5000";
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState(null);
@@ -218,7 +219,7 @@ export default function Rooms() {
                 {/* Image Preview - Always show original image */}
                 <div className="relative h-48 bg-gray-100">
                   <img
-                    src={`${process.env.NEXT_PUBLIC_FILES_URL}${room.filePath}`}
+                    src={`${FILES_BASE}${room.filePath}`}
                     alt={room.originalName}
                     className="w-full h-full object-cover"
                   />
@@ -416,7 +417,7 @@ export default function Rooms() {
                       <p className="text-sm font-medium text-gray-700">Original Image</p>
                       <div className="relative rounded-xl overflow-hidden bg-gray-100 shadow-md">
                         <img
-                          src={`${process.env.NEXT_PUBLIC_FILES_URL}${roomDetails.filePath}`}
+                          src={`${FILES_BASE}${roomDetails.filePath}`}
                           alt="Original"
                           className="w-full h-auto"
                           onError={(e) => {
@@ -431,7 +432,7 @@ export default function Rooms() {
                         <p className="text-sm font-medium text-gray-700">Segmentation Mask</p>
                         <div className="relative rounded-xl overflow-hidden bg-gray-100 shadow-md">
                           <img
-                            src={`${process.env.NEXT_PUBLIC_FILES_URL}${roomDetails.maskUrl}`}
+                            src={`${FILES_BASE}${roomDetails.maskUrl}`}
                             alt="Segmentation"
                             className="w-full h-auto"
                             onError={(e) => {
@@ -596,7 +597,7 @@ export default function Rooms() {
                 </Link>
                 {selectedRoom.maskUrl && (
                   <button
-                    onClick={() => window.open(`${process.env.NEXT_PUBLIC_FILES_URL}${selectedRoom.maskUrl}`, '_blank')}
+                    onClick={() => window.open(`${FILES_BASE}${selectedRoom.maskUrl}`, '_blank')}
                     className="px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors shadow-sm"
                   >
                     <span className="flex items-center">

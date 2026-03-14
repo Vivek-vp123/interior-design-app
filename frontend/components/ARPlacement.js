@@ -1,324 +1,437 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
-// ARPlacement: progressive enhancement for AR placement
-// - Tries to use <model-viewer> (web component) for device AR (Android Scene Viewer / iOS Quick Look / WebXR)
-// - Falls back to a camera overlay with a draggable/scalable/rotatable 2D preview for devices without AR support
+export default function ARPlacement({
+  modelSrc,
+  fallbackImageSrc,
+  alt = "item",
+  modelRealWidthMeters = null,
+}) {
+  const containerRef = useRef(null);
+  const videoRef = useRef(null);
+  const dragStartRef = useRef(null);
 
-export default function ARPlacement({ modelSrc, fallbackImageSrc, alt = 'item', modelRealWidthMeters = null }) {
-  const [canUseModelViewer, setCanUseModelViewer] = useState(false)
-  const [mounted, setMounted] = useState(false)
-  const videoRef = useRef(null)
-  const spriteRef = useRef(null)
-  const containerRef = useRef(null)
+  const [mounted, setMounted] = useState(false);
+  const [mode, setMode] = useState("camera");
+  const [supportsModelViewer, setSupportsModelViewer] = useState(false);
+  const [cameraError, setCameraError] = useState("");
+  const [cameraReady, setCameraReady] = useState(false);
 
-  // placement state for fallback overlay
-  const [pos, setPos] = useState({ x: 0.5, y: 0.5 }) // normalized
-  const [scale, setScale] = useState(1)
-  const [rotation, setRotation] = useState(0)
-  const [analyzing, setAnalyzing] = useState(false)
-  const [analysisResult, setAnalysisResult] = useState(null)
-  const overlayCanvasRef = useRef(null)
-  const [roomWidthM, setRoomWidthM] = useState('')
-  const [roomLengthM, setRoomLengthM] = useState('')
-  const [calibrationMode, setCalibrationMode] = useState(false)
-  const [calibrationPoints, setCalibrationPoints] = useState([])
-  const [pixelsPerMeter, setPixelsPerMeter] = useState(null)
-  const [pendingDistanceM, setPendingDistanceM] = useState('')
+  const [position, setPosition] = useState({ x: 0.5, y: 0.78 });
+  const [rotation, setRotation] = useState(0);
+  const [manualScale, setManualScale] = useState(1);
+
+  const [imageAspectRatio, setImageAspectRatio] = useState(1);
+
+  const [calibrationMode, setCalibrationMode] = useState(false);
+  const [calibrationPoints, setCalibrationPoints] = useState([]);
+  const [calibrationDistanceM, setCalibrationDistanceM] = useState("");
+  const [pixelsPerMeter, setPixelsPerMeter] = useState(null);
 
   useEffect(() => {
-    setMounted(true)
+    setMounted(true);
 
-    // load model-viewer only on client when available
-    if (typeof window !== 'undefined') {
-      // dynamic import of the polyfilled webcomponent if available in package
+    import("@google/model-viewer")
+      .then(() => setSupportsModelViewer(true))
+      .catch(() => setSupportsModelViewer(false));
+  }, []);
+
+  useEffect(() => {
+    let stream;
+
+    const stopCurrentStream = () => {
+      const current = videoRef.current?.srcObject;
+      if (current && current.getTracks) {
+        current.getTracks().forEach((track) => track.stop());
+      }
+      if (videoRef.current) {
+        videoRef.current.srcObject = null;
+      }
+    };
+
+    const startCamera = async () => {
+      if (!mounted || mode !== "camera") return;
+
+      setCameraError("");
+      setCameraReady(false);
+
       try {
-        // feature detect WebXR or model-viewer support
-        const hasWebXR = !!(navigator.xr && navigator.xr.isSessionSupported)
-        // We'll attempt to load model-viewer; if it registers the element, use it
-        import('@google/model-viewer').then(() => {
-          // model-viewer registers <model-viewer>
-          // Prefer to enable it when possible - even if WebXR isn't available, model-viewer provides Quick Look/Scene Viewer fallbacks on mobile
-          setCanUseModelViewer(true)
-        }).catch(() => {
-          // not installed or failed to load; fallback
-          setCanUseModelViewer(false)
-        })
-      } catch (e) {
-        setCanUseModelViewer(false)
-      }
-    }
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: { ideal: "environment" },
+            width: { ideal: 1920 },
+            height: { ideal: 1080 },
+          },
+          audio: false,
+        });
 
-    return () => {
-      // stop camera if active
-      const v = videoRef.current
-      if (v && v.srcObject) {
-        v.srcObject.getTracks().forEach(t => t.stop())
-      }
-    }
-  }, [])
-
-  useEffect(() => {
-    // Start camera for fallback when model-viewer isn't usable
-    if (!canUseModelViewer && mounted) {
-      const startCamera = async () => {
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false })
-          if (videoRef.current) {
-            videoRef.current.srcObject = stream
-            videoRef.current.play().catch(() => {})
-          }
-        } catch (err) {
-          // permission denied or no camera - leave blank
-          console.warn('Camera not available for AR fallback', err)
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          await videoRef.current.play();
+          setCameraReady(true);
         }
+      } catch (err) {
+        setCameraError("Camera access failed. Allow camera permission or use 3D preview.");
       }
-      startCamera()
+    };
+
+    if (mode === "camera") {
+      startCamera();
+    } else {
+      stopCurrentStream();
     }
-  }, [canUseModelViewer, mounted])
-
-  // helper: draw mask image over overlay canvas
-  const drawMaskOnOverlay = async (maskUrl) => {
-    try {
-      const img = new Image()
-      img.crossOrigin = 'anonymous'
-      img.src = maskUrl
-      await new Promise((res, rej) => {
-        img.onload = res
-        img.onerror = rej
-      })
-
-      const canvas = overlayCanvasRef.current
-      const video = videoRef.current
-      if (!canvas || !video) return
-
-      // match canvas size to video display size
-      const rect = video.getBoundingClientRect()
-      canvas.width = rect.width
-      canvas.height = rect.height
-      canvas.style.width = `${rect.width}px`
-      canvas.style.height = `${rect.height}px`
-
-      const ctx = canvas.getContext('2d')
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      // draw mask with transparency
-      // scale mask to canvas size
-      ctx.globalAlpha = 0.6
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-      ctx.globalAlpha = 1.0
-    } catch (err) {
-      console.warn('Failed to draw mask overlay', err)
-    }
-  }
-
-  // pointer handlers for dragging
-  useEffect(() => {
-    const el = containerRef.current
-    if (!el) return
-
-    let dragging = false
-    let last = null
-
-    const toNormalized = (clientX, clientY) => {
-      const r = el.getBoundingClientRect()
-      return { x: (clientX - r.left) / r.width, y: (clientY - r.top) / r.height }
-    }
-
-    const onPointerDown = (e) => {
-      // If in calibration mode, capture two points (screen coords) instead of dragging
-      const rect = el.getBoundingClientRect()
-      if (calibrationMode) {
-        const p = { x: e.clientX - rect.left, y: e.clientY - rect.top }
-        setCalibrationPoints(prev => {
-          const next = [...prev, p].slice(-2)
-          return next
-        })
-        return
-      }
-
-      dragging = true
-      last = { x: e.clientX, y: e.clientY }
-      ;(e.target || e.srcElement).setPointerCapture && (e.target || e.srcElement).setPointerCapture(e.pointerId)
-    }
-
-    const onPointerMove = (e) => {
-      if (!dragging) return
-      const n = toNormalized(e.clientX, e.clientY)
-      setPos(n)
-      last = { x: e.clientX, y: e.clientY }
-    }
-
-    const onPointerUp = (e) => {
-      dragging = false
-      last = null
-    }
-
-    el.addEventListener('pointerdown', onPointerDown)
-    window.addEventListener('pointermove', onPointerMove)
-    window.addEventListener('pointerup', onPointerUp)
 
     return () => {
-      el.removeEventListener('pointerdown', onPointerDown)
-      window.removeEventListener('pointermove', onPointerMove)
-      window.removeEventListener('pointerup', onPointerUp)
-    }
-  }, [])
+      stopCurrentStream();
+    };
+  }, [mounted, mode]);
 
-  // Watch calibration points - when two are available prompt for real distance (or show input)
   useEffect(() => {
-    if (calibrationPoints.length === 2) {
-      // show pending input in UI (we don't prompt here)
-      // Optionally, we could prefill a sample value
+    setPosition({ x: 0.5, y: 0.78 });
+    setRotation(0);
+    setManualScale(1);
+  }, [fallbackImageSrc]);
+
+  const displayedWidthPx = useMemo(() => {
+    if (pixelsPerMeter && modelRealWidthMeters && modelRealWidthMeters > 0) {
+      return Math.max(48, pixelsPerMeter * modelRealWidthMeters * manualScale);
     }
-  }, [calibrationPoints])
+    return 180 * manualScale;
+  }, [pixelsPerMeter, modelRealWidthMeters, manualScale]);
 
-  // helpers for controls
-  const increaseScale = () => setScale(s => Math.min(3, s + 0.1))
-  const decreaseScale = () => setScale(s => Math.max(0.1, s - 0.1))
-  const rotateLeft = () => setRotation(r => r - 10)
-  const rotateRight = () => setRotation(r => r + 10)
+  const displayedHeightPx = useMemo(() => {
+    const ratio = imageAspectRatio > 0 ? imageAspectRatio : 1;
+    return displayedWidthPx / ratio;
+  }, [displayedWidthPx, imageAspectRatio]);
 
-  const captureAndAnalyze = async () => {
-    if (!videoRef.current) return
-    setAnalyzing(true)
-    try {
-      // capture frame
-      const vid = videoRef.current
-      const cw = vid.videoWidth || vid.clientWidth
-      const ch = vid.videoHeight || vid.clientHeight
-      const c = document.createElement('canvas')
-      c.width = cw
-      c.height = ch
-      const ctx = c.getContext('2d')
-      ctx.drawImage(vid, 0, 0, c.width, c.height)
+  const clampPosition = (x, y) => ({
+    x: Math.max(0.05, Math.min(0.95, x)),
+    y: Math.max(0.05, Math.min(0.95, y)),
+  });
 
-      // convert to blob
-      const blob = await new Promise((res) => c.toBlob(res, 'image/jpeg', 0.9))
+  const beginDrag = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-      // send to segmentation service (FastAPI) directly
-      const SEG_URL = (process.env.NEXT_PUBLIC_SEGMENTATION_URL || 'http://localhost:8000').replace(/\/+$/, '')
-      const form = new FormData()
-      form.append('file', blob, 'capture.jpg')
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
 
-      const resp = await fetch(`${SEG_URL}/segment`, {
-        method: 'POST',
-        body: form,
-      })
+    dragStartRef.current = {
+      startPointerX: e.clientX,
+      startPointerY: e.clientY,
+      startX: position.x,
+      startY: position.y,
+      width: rect.width,
+      height: rect.height,
+    };
+  };
 
-      if (!resp.ok) throw new Error('Segmentation service returned ' + resp.status)
-      const data = await resp.json()
-      setAnalysisResult(data)
+  useEffect(() => {
+    const onMove = (e) => {
+      const state = dragStartRef.current;
+      if (!state) return;
 
-      // draw mask overlay
-      if (data.mask_url) {
-        const maskFull = data.mask_url.startsWith('/') ? `${SEG_URL}${data.mask_url}` : data.mask_url
-        await drawMaskOnOverlay(maskFull)
-      }
-    } catch (err) {
-      console.error('Analyze error', err)
-      alert('Analysis failed: ' + (err.message || err))
-    } finally {
-      setAnalyzing(false)
-    }
-  }
+      const dx = (e.clientX - state.startPointerX) / state.width;
+      const dy = (e.clientY - state.startPointerY) / state.height;
 
-  const confirmCalibration = () => {
-    if (calibrationPoints.length < 2) return
-    const el = containerRef.current
-    const rect = el.getBoundingClientRect()
-    const [p1, p2] = calibrationPoints
-    const dx = p2.x - p1.x
-    const dy = p2.y - p1.y
-    const pixelDist = Math.hypot(dx, dy)
-    const meters = parseFloat(pendingDistanceM)
+      setPosition(clampPosition(state.startX + dx, state.startY + dy));
+    };
+
+    const onUp = () => {
+      dragStartRef.current = null;
+    };
+
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+    };
+  }, []);
+
+  const onContainerPointerDown = (e) => {
+    if (!calibrationMode) return;
+
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    setCalibrationPoints((prev) => {
+      if (prev.length >= 2) return [{ x, y }];
+      return [...prev, { x, y }];
+    });
+  };
+
+  const applyCalibration = () => {
+    if (calibrationPoints.length !== 2) return;
+
+    const meters = Number(calibrationDistanceM);
     if (!meters || meters <= 0) {
-      alert('Enter a valid distance in meters')
-      return
-    }
-    const ppm = pixelDist / meters
-    setPixelsPerMeter(ppm)
-    setCalibrationMode(false)
-    // clear points
-    setCalibrationPoints([])
-    setPendingDistanceM('')
-  }
-
-  // resize overlay canvas when container/video size changes
-  useEffect(() => {
-    const resizeOverlay = () => {
-      const canvas = overlayCanvasRef.current
-      const video = videoRef.current
-      if (!canvas || !video) return
-      const rect = video.getBoundingClientRect()
-      canvas.width = rect.width
-      canvas.height = rect.height
-      canvas.style.width = `${rect.width}px`
-      canvas.style.height = `${rect.height}px`
-      // redraw existing mask if any
-      if (analysisResult?.mask_url) {
-        const SEG_URL = (process.env.NEXT_PUBLIC_SEGMENTATION_URL || 'http://localhost:8000').replace(/\/+$/, '')
-        const maskFull = analysisResult.mask_url.startsWith('/') ? `${SEG_URL}${analysisResult.mask_url}` : analysisResult.mask_url
-        drawMaskOnOverlay(maskFull).catch(()=>{})
-      }
+      alert("Enter a valid real-world distance in meters.");
+      return;
     }
 
-    window.addEventListener('resize', resizeOverlay)
-    const ro = new ResizeObserver(resizeOverlay)
-    if (containerRef.current) ro.observe(containerRef.current)
-    if (videoRef.current) ro.observe(videoRef.current)
-    // initial
-    setTimeout(resizeOverlay, 300)
-
-    return () => {
-      window.removeEventListener('resize', resizeOverlay)
-      try { ro.disconnect() } catch(e){}
+    const [p1, p2] = calibrationPoints;
+    const pixelDistance = Math.hypot(p2.x - p1.x, p2.y - p1.y);
+    if (pixelDistance < 8) {
+      alert("Calibration points are too close. Pick two farther points.");
+      return;
     }
-  }, [analysisResult])
 
-  // Render
-  if (!mounted) return null
+    setPixelsPerMeter(pixelDistance / meters);
+    setCalibrationMode(false);
+    setCalibrationPoints([]);
+    setCalibrationDistanceM("");
+  };
 
-  // Always use model-viewer for 3D preview if AR is not available
-  if (typeof window !== 'undefined') {
-    return (
-      <div style={{ padding: 12 }}>
-        <div style={{ marginBottom: 8 }}>
-          <strong>{canUseModelViewer ? 'AR mode' : '3D Preview'}</strong> — {canUseModelViewer ? 'tap the AR icon to place the item in your environment. If your device supports Quick Look / Scene Viewer it will open the native viewer.' : 'AR is not supported on this device, but you can still view and interact with the 3D model.'}
-        </div>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <model-viewer
-          src={modelSrc}
-          alt={alt}
-          ar={canUseModelViewer}
-          ar-modes="scene-viewer quick-look webxr"
-          camera-controls
-          style={{ width: '100%', height: '80vh', backgroundColor: '#000' }}
-        />
-        <div style={{ marginTop: 8, fontSize: 13, color: '#666' }}>
-          {canUseModelViewer
-            ? "If the AR icon doesn't appear, your device may not support native AR from the browser — the component will fall back to 3D preview."
-            : "AR is not available, but you can still rotate, zoom, and inspect the 3D model here."}
-        </div>
+  const resetCalibration = () => {
+    setPixelsPerMeter(null);
+    setCalibrationMode(false);
+    setCalibrationPoints([]);
+    setCalibrationDistanceM("");
+  };
+
+  const alignToFloor = () => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+
+    const y = (rect.height - displayedHeightPx * 0.5 - 12) / rect.height;
+    setPosition(clampPosition(position.x, y));
+  };
+
+  if (!mounted) return null;
+
+  return (
+    <div style={{ display: "grid", gap: 12 }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+        <button onClick={() => setMode("camera")} style={mode === "camera" ? activeButton : button}>
+          Camera Placement
+        </button>
+        <button onClick={() => setMode("preview")} style={mode === "preview" ? activeButton : button}>
+          3D Preview
+        </button>
+        <button
+          onClick={() => setMode("native")}
+          disabled={!supportsModelViewer}
+          style={mode === "native" ? activeButton : buttonDisabled(supportsModelViewer)}
+        >
+          Native AR
+        </button>
       </div>
-    )
-  }
+
+      {mode === "native" && supportsModelViewer && (
+        <div>
+          <model-viewer
+            src={modelSrc}
+            alt={alt}
+            ar
+            ar-modes="scene-viewer quick-look webxr"
+            camera-controls
+            style={{ width: "100%", height: "75vh", backgroundColor: "#111", borderRadius: 12 }}
+          />
+          <p style={hintText}>Tap the AR icon to open native AR on supported devices.</p>
+        </div>
+      )}
+
+      {(mode === "camera" || mode === "preview") && (
+        <div style={{ display: "grid", gap: 10 }}>
+          <div
+            ref={containerRef}
+            onPointerDown={onContainerPointerDown}
+            style={{
+              position: "relative",
+              width: "100%",
+              height: "72vh",
+              borderRadius: 14,
+              overflow: "hidden",
+              background: "#0f172a",
+              border: "1px solid #334155",
+              touchAction: "none",
+            }}
+          >
+            {mode === "camera" ? (
+              <>
+                <video
+                  ref={videoRef}
+                  playsInline
+                  muted
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                />
+                {!cameraReady && !cameraError && (
+                  <div style={overlayText}>Starting camera...</div>
+                )}
+                {cameraError && <div style={overlayText}>{cameraError}</div>}
+              </>
+            ) : (
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  background:
+                    "radial-gradient(circle at 20% 20%, #1e293b, #0f172a 60%, #020617)",
+                  display: "grid",
+                  placeItems: "center",
+                }}
+              >
+                <p style={{ color: "#cbd5e1", fontSize: 14 }}>3D preview background (no camera)</p>
+              </div>
+            )}
+
+            <img
+              src={fallbackImageSrc}
+              alt={alt}
+              onLoad={(e) => {
+                const img = e.currentTarget;
+                if (img.naturalWidth && img.naturalHeight) {
+                  setImageAspectRatio(img.naturalWidth / img.naturalHeight);
+                }
+              }}
+              onPointerDown={beginDrag}
+              style={{
+                position: "absolute",
+                left: `${position.x * 100}%`,
+                top: `${position.y * 100}%`,
+                width: displayedWidthPx,
+                height: displayedHeightPx,
+                transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
+                objectFit: "contain",
+                cursor: "grab",
+                userSelect: "none",
+                touchAction: "none",
+                filter: "drop-shadow(0 14px 18px rgba(0,0,0,0.35))",
+              }}
+              draggable={false}
+            />
+
+            {calibrationPoints.length > 0 && (
+              <svg
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}
+              >
+                {calibrationPoints.map((p, idx) => (
+                  <circle key={`${p.x}-${p.y}-${idx}`} cx={p.x} cy={p.y} r="6" fill="#f97316" />
+                ))}
+                {calibrationPoints.length === 2 && (
+                  <line
+                    x1={calibrationPoints[0].x}
+                    y1={calibrationPoints[0].y}
+                    x2={calibrationPoints[1].x}
+                    y2={calibrationPoints[1].y}
+                    stroke="#f97316"
+                    strokeWidth="3"
+                  />
+                )}
+              </svg>
+            )}
+          </div>
+
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
+            <button onClick={() => setRotation((r) => r - 10)} style={button}>Rotate -10</button>
+            <button onClick={() => setRotation((r) => r + 10)} style={button}>Rotate +10</button>
+            <button onClick={() => setManualScale((s) => Math.max(0.3, s - 0.1))} style={button}>Scale -</button>
+            <button onClick={() => setManualScale((s) => Math.min(3, s + 0.1))} style={button}>Scale +</button>
+            <button onClick={alignToFloor} style={button}>Align to Floor</button>
+            <button onClick={() => setCalibrationMode((v) => !v)} style={calibrationMode ? activeButton : button}>
+              {calibrationMode ? "Stop Calibrate" : "Calibrate Scale"}
+            </button>
+            <button onClick={resetCalibration} style={button}>Reset Calibration</button>
+          </div>
+
+          {calibrationMode && (
+            <div style={panel}>
+              <div style={{ fontSize: 14, fontWeight: 600 }}>Calibration</div>
+              <p style={hintText}>Tap two points in camera view with known distance (for example, door width), then enter meters.</p>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+                <input
+                  value={calibrationDistanceM}
+                  onChange={(e) => setCalibrationDistanceM(e.target.value)}
+                  placeholder="Distance in meters"
+                  type="number"
+                  step="0.01"
+                  style={input}
+                />
+                <button onClick={applyCalibration} style={activeButton} disabled={calibrationPoints.length !== 2}>
+                  Apply
+                </button>
+              </div>
+              <div style={hintText}>Points selected: {calibrationPoints.length}/2</div>
+            </div>
+          )}
+
+          <div style={panel}>
+            <div style={{ fontSize: 14, fontWeight: 600 }}>Placement Metrics</div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 8, marginTop: 6 }}>
+              <div style={metric}><strong>Model width:</strong> {modelRealWidthMeters ? `${modelRealWidthMeters} m` : "not set"}</div>
+              <div style={metric}><strong>Pixels/meter:</strong> {pixelsPerMeter ? pixelsPerMeter.toFixed(2) : "not calibrated"}</div>
+              <div style={metric}><strong>Rendered width:</strong> {Math.round(displayedWidthPx)} px</div>
+              <div style={metric}><strong>Tip:</strong> drag object to fine-tune placement.</div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
-const controlButtonStyle = {
-  width: 44,
-  height: 44,
+const button = {
+  padding: "8px 12px",
   borderRadius: 8,
-  border: 'none',
-  background: 'rgba(255,255,255,0.9)',
-  fontSize: 18,
-  cursor: 'pointer'
-}
-
-const controlSmall = {
-  padding: '8px 12px',
-  borderRadius: 8,
-  border: 'none',
-  background: 'rgba(255,255,255,0.95)',
+  border: "1px solid #cbd5e1",
+  background: "#fff",
+  cursor: "pointer",
   fontSize: 14,
-  cursor: 'pointer'
-}
+};
+
+const activeButton = {
+  ...button,
+  border: "1px solid #4f46e5",
+  background: "#4f46e5",
+  color: "#fff",
+};
+
+const buttonDisabled = (enabled) => ({
+  ...button,
+  opacity: enabled ? 1 : 0.5,
+  cursor: enabled ? "pointer" : "not-allowed",
+});
+
+const overlayText = {
+  position: "absolute",
+  inset: 0,
+  display: "grid",
+  placeItems: "center",
+  color: "#fff",
+  background: "rgba(2,6,23,0.45)",
+  fontSize: 14,
+};
+
+const hintText = {
+  fontSize: 13,
+  color: "#64748b",
+  margin: 0,
+};
+
+const input = {
+  border: "1px solid #cbd5e1",
+  borderRadius: 8,
+  padding: "8px 10px",
+  minWidth: 180,
+};
+
+const panel = {
+  border: "1px solid #e2e8f0",
+  borderRadius: 10,
+  padding: 10,
+  background: "#f8fafc",
+  display: "grid",
+  gap: 8,
+};
+
+const metric = {
+  background: "#fff",
+  border: "1px solid #e2e8f0",
+  borderRadius: 8,
+  padding: "8px 10px",
+  fontSize: 13,
+};

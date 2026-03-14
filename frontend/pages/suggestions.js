@@ -4,6 +4,7 @@ import API from "../lib/api";
 import Layout from "../components/Layout";
 
 export default function Suggestions() {
+  const FILES_BASE = process.env.NEXT_PUBLIC_FILES_URL || "http://localhost:5000";
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [suggestions, setSuggestions] = useState([]);
@@ -17,12 +18,13 @@ export default function Suggestions() {
     const fetchRooms = async () => {
       try {
         const res = await API.get("/upload");
-        setRooms(Array.isArray(res.data) ? res.data : (res.data.data || []));
+        const roomsData = Array.isArray(res.data) ? res.data : (res.data.data || res.data.rooms || []);
+        setRooms(roomsData);
 
         // Auto-select room if roomId is in query params
         const { roomId } = router.query;
-        if (roomId && res.data.length > 0) {
-          const room = res.data.find(r => r._id === roomId);
+        if (roomId && roomsData.length > 0) {
+          const room = roomsData.find((r) => r._id === roomId);
           if (room) {
             setSelectedRoom(room);
             fetchSuggestions(roomId);
@@ -35,7 +37,7 @@ export default function Suggestions() {
       }
     };
     fetchRooms();
-  }, [router.query]);
+  }, [router.query.roomId]);
 
   // Fetch suggestions for a selected room
 const fetchSuggestions = async (roomId) => {
@@ -46,8 +48,6 @@ const fetchSuggestions = async (roomId) => {
     const data = Array.isArray(res.data)
       ? res.data
       : (res.data.suggestions || []);
-    console.log("AI Suggestions received:", data);
-    data.forEach((s, i) => console.log(`Suggestion ${i} imageUrl:`, s.imageUrl));
     setSuggestions(data);
   } catch (err) {
     console.error("Failed to load suggestions:", err);
@@ -184,7 +184,7 @@ const fetchSuggestions = async (roomId) => {
             {selectedRoom && (
               <div className="relative rounded-lg overflow-hidden bg-gray-100 h-48">
                 <img
-                  src={`${process.env.NEXT_PUBLIC_FILES_URL}${selectedRoom.filePath}`}
+                  src={`${FILES_BASE}${selectedRoom.filePath}`}
                   alt={selectedRoom.originalName}
                   className="w-full h-full object-cover"
                 />

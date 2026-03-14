@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  segmentation_service:
+    build:
+      context: ./segmentation_service
+    restart: unless-stopped
+    env_file:
+      - ./segmentation_service/.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./segmentation_service/uploads:/app/uploads
+      - ./segmentation_service/outputs:/app/outputs
+      - ./segmentation_service/cache:/app/cache
+
+  backend:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    depends_on:
+      - mongo
+      - segmentation_service
+    env_file:
+      - ./backend/.env
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend/uploads:/app/uploads
+      - ./segmentation_service/outputs:/segmentation_service/outputs
+
+  frontend:
+    build:
+      context: ./frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    env_file:
+      - ./frontend/.env.local
+    ports:
+      - "3000:3000"
+
+volumes:
+  mongo_data:

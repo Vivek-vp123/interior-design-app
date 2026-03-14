@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 const router = express.Router();
+const JWT_SECRET = process.env.JWT_SECRET || "dev-only-secret";
 
 // Register
 router.post("/register", async (req, res) => {
@@ -34,7 +35,7 @@ router.post("/login", async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
 
-    const token = jwt.sign({ id: user._id }, "secretKey", { expiresIn: "1h" });
+    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "1h" });
 
     res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
   } catch (err) {

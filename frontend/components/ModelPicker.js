@@ -17,6 +17,7 @@ export default function ModelPicker({ models, onSelect, selectedId }) {
             boxShadow: selectedId === model.id ? '0 2px 8px #6366f133' : '0 1px 4px #0001',
             transition: 'all 0.2s',
             textAlign: 'center',
+            color: '#0f172a',
           }}
         >
           <img
@@ -24,7 +25,7 @@ export default function ModelPicker({ models, onSelect, selectedId }) {
             alt={model.title}
             style={{ width: '100%', height: 80, objectFit: 'cover', borderRadius: 8, marginBottom: 8 }}
           />
-          <div style={{ fontWeight: 600, fontSize: 15 }}>{model.title}</div>
+          <div style={{ fontWeight: 600, fontSize: 15, color: '#0f172a' }}>{model.title}</div>
           <div style={{ fontSize: 13, color: '#666', margin: '4px 0' }}>{model.category}</div>
           <div style={{ fontSize: 13, color: '#888' }}>{model.price}</div>
         </div>
