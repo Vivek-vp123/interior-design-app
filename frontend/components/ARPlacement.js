@@ -212,30 +212,33 @@ export default function ARPlacement({
         <button onClick={() => setMode("preview")} style={mode === "preview" ? activeButton : button}>
           3D Preview
         </button>
-        <button
-          onClick={() => setMode("native")}
-          disabled={!supportsModelViewer}
-          style={mode === "native" ? activeButton : buttonDisabled(supportsModelViewer)}
-        >
-          Native AR
-        </button>
       </div>
 
-      {mode === "native" && supportsModelViewer && (
-        <div>
+
+      {(mode === "preview") && supportsModelViewer && (
+        <div style={{ display: "grid", gap: 10 }}>
           <model-viewer
             src={modelSrc}
             alt={alt}
-            ar
-            ar-modes="scene-viewer quick-look webxr"
             camera-controls
-            style={{ width: "100%", height: "75vh", backgroundColor: "#111", borderRadius: 12 }}
+            auto-rotate
+            ar
+            style={{ width: "100%", height: "72vh", background: "radial-gradient(circle at 50% 50%, #f8fafc, #e2e8f0)", borderRadius: 14 }}
           />
-          <p style={hintText}>Tap the AR icon to open native AR on supported devices.</p>
+          <p style={hintText}>Rotate and zoom the 3D model. Tap the AR icon in the corner if on a supported device.</p>
         </div>
       )}
 
-      {(mode === "camera" || mode === "preview") && (
+      {(mode === "preview") && !supportsModelViewer && (
+        <div style={{ display: "grid", gap: 10 }}>
+          <div style={{ width: "100%", height: "72vh", background: "#f8fafc", borderRadius: 14, display: "grid", placeItems: "center" }}>
+             <img src={fallbackImageSrc} alt={alt} style={{ maxWidth: '80%', maxHeight: '80%', objectFit: 'contain' }} />
+          </div>
+          <p style={hintText}>3D viewer is not supported on this device. Showing image fallback.</p>
+        </div>
+      )}
+
+      {mode === "camera" && (
         <div style={{ display: "grid", gap: 10 }}>
           <div
             ref={containerRef}
@@ -251,59 +254,72 @@ export default function ARPlacement({
               touchAction: "none",
             }}
           >
-            {mode === "camera" ? (
-              <>
-                <video
-                  ref={videoRef}
-                  playsInline
-                  muted
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                />
-                {!cameraReady && !cameraError && (
-                  <div style={overlayText}>Starting camera...</div>
-                )}
-                {cameraError && <div style={overlayText}>{cameraError}</div>}
-              </>
-            ) : (
+            <video
+              ref={videoRef}
+              playsInline
+              muted
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            />
+            {!cameraReady && !cameraError && (
+              <div style={overlayText}>Starting camera...</div>
+            )}
+            {cameraError && <div style={overlayText}>{cameraError}</div>}
+
+            {supportsModelViewer && modelSrc ? (
               <div
+                onPointerDown={beginDrag}
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  background:
-                    "radial-gradient(circle at 20% 20%, #1e293b, #0f172a 60%, #020617)",
-                  display: "grid",
-                  placeItems: "center",
+                  position: "absolute",
+                  left: `${position.x * 100}%`,
+                  top: `${position.y * 100}%`,
+                  width: displayedWidthPx,
+                  height: displayedHeightPx,
+                  transform: `translate(-50%, -50%)`,
+                  cursor: "grab",
+                  userSelect: "none",
+                  touchAction: "none",
+                  zIndex: 10,
                 }}
               >
-                <p style={{ color: "#cbd5e1", fontSize: 14 }}>3D preview background (no camera)</p>
+                <div style={{ width: "100%", height: "100%", filter: "drop-shadow(0 14px 18px rgba(0,0,0,0.35))" }}>
+                  <model-viewer
+                    src={modelSrc}
+                    alt={alt}
+                    disable-zoom
+                    disable-pan
+                    camera-orbit={`${rotation}deg 75deg 105%`}
+                    interaction-prompt="none"
+                    style={{ width: "100%", height: "100%", backgroundColor: "transparent", pointerEvents: "none" }}
+                  />
+                </div>
               </div>
+            ) : (
+              <img
+                src={fallbackImageSrc}
+                alt={alt}
+                onLoad={(e) => {
+                  const img = e.currentTarget;
+                  if (img.naturalWidth && img.naturalHeight) {
+                    setImageAspectRatio(img.naturalWidth / img.naturalHeight);
+                  }
+                }}
+                onPointerDown={beginDrag}
+                style={{
+                  position: "absolute",
+                  left: `${position.x * 100}%`,
+                  top: `${position.y * 100}%`,
+                  width: displayedWidthPx,
+                  height: displayedHeightPx,
+                  transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
+                  objectFit: "contain",
+                  cursor: "grab",
+                  userSelect: "none",
+                  touchAction: "none",
+                  filter: "drop-shadow(0 14px 18px rgba(0,0,0,0.35))",
+                }}
+                draggable={false}
+              />
             )}
-
-            <img
-              src={fallbackImageSrc}
-              alt={alt}
-              onLoad={(e) => {
-                const img = e.currentTarget;
-                if (img.naturalWidth && img.naturalHeight) {
-                  setImageAspectRatio(img.naturalWidth / img.naturalHeight);
-                }
-              }}
-              onPointerDown={beginDrag}
-              style={{
-                position: "absolute",
-                left: `${position.x * 100}%`,
-                top: `${position.y * 100}%`,
-                width: displayedWidthPx,
-                height: displayedHeightPx,
-                transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
-                objectFit: "contain",
-                cursor: "grab",
-                userSelect: "none",
-                touchAction: "none",
-                filter: "drop-shadow(0 14px 18px rgba(0,0,0,0.35))",
-              }}
-              draggable={false}
-            />
 
             {calibrationPoints.length > 0 && (
               <svg
@@ -327,8 +343,8 @@ export default function ARPlacement({
           </div>
 
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
-            <button onClick={() => setRotation((r) => r - 10)} style={button}>Rotate -10</button>
-            <button onClick={() => setRotation((r) => r + 10)} style={button}>Rotate +10</button>
+            <button onClick={() => setRotation((r) => r - 10)} style={button}>Rotate Left</button>
+            <button onClick={() => setRotation((r) => r + 10)} style={button}>Rotate Right</button>
             <button onClick={() => setManualScale((s) => Math.max(0.3, s - 0.1))} style={button}>Scale -</button>
             <button onClick={() => setManualScale((s) => Math.min(3, s + 0.1))} style={button}>Scale +</button>
             <button onClick={alignToFloor} style={button}>Align to Floor</button>

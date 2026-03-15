@@ -1,31 +1,26 @@
 {
   "components\\ARPlacement.js -> @google/model-viewer": {
-    "id": 5270,
+    "id": "components\\ARPlacement.js -> @google/model-viewer",
     "files": [
-      "static/chunks/4559568c.d8ca3f8c32e089d5.js",
-      "static/chunks/69b51223.a8f6f8483ea12d47.js",
-      "static/chunks/270.5fa23e599b1ffe61.js"
+      "static/chunks/_pages-dir-browser_node_modules_google_model-viewer_lib_model-viewer_js-_dd781.js"
     ]
   },
   "node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {
-    "id": 1806,
+    "id": "node_modules\\next\\dist\\client\\index.js -> ../pages/_app",
     "files": [
-      "static/chunks/806.a7e9447414a53493.js"
+      "static/chunks/_pages-dir-browser_node_modules_next_dist_pages__app_js.js"
     ]
   },
   "node_modules\\next\\dist\\client\\index.js -> ../pages/_error": {
-    "id": 8123,
+    "id": "node_modules\\next\\dist\\client\\index.js -> ../pages/_error",
     "files": [
-      "static/chunks/123.f3d27f38429d3ab5.js"
+      "static/chunks/_pages-dir-browser_node_modules_next_dist_pages__error_js.js"
     ]
   },
   "pages\\_app.js -> @google/model-viewer": {
-    "id": 5270,
+    "id": "pages\\_app.js -> @google/model-viewer",
     "files": [
-      "static/chunks/4559568c.d8ca3f8c32e089d5.js",
-      "static/chunks/69b51223.a8f6f8483ea12d47.js",
-      "static/chunks/220-4fe8dd83ff67984c.js",
-      "static/chunks/270.5fa23e599b1ffe61.js"
+      "static/chunks/_pages-dir-browser_node_modules_google_model-viewer_lib_model-viewer_js-_dd780.js"
     ]
   }
 }
