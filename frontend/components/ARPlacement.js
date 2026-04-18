@@ -223,8 +223,23 @@ export default function ARPlacement({
             camera-controls
             auto-rotate
             ar
+            shadow-intensity="1"
+            shadow-softness="0.5"
+            loading="eager"
+            poster={fallbackImageSrc}
             style={{ width: "100%", height: "72vh", background: "radial-gradient(circle at 50% 50%, #f8fafc, #e2e8f0)", borderRadius: 14 }}
-          />
+          >
+            <div slot="progress-bar" style={{
+              position: "absolute", bottom: 0, left: 0, right: 0, height: 4,
+              background: "#e2e8f0", borderRadius: "0 0 14px 14px", overflow: "hidden"
+            }}>
+              <div style={{
+                height: "100%", background: "linear-gradient(90deg, #4f46e5, #7c3aed)",
+                transition: "width 0.3s ease", width: "100%",
+                animation: "loadPulse 1.5s ease-in-out infinite"
+              }} />
+            </div>
+          </model-viewer>
           <p style={hintText}>Rotate and zoom the 3D model. Tap the AR icon in the corner if on a supported device.</p>
         </div>
       )}

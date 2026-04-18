@@ -25,12 +25,13 @@ export default function ARPage() {
   const [loading, setLoading] = useState(true);
   const [sourceLabel, setSourceLabel] = useState("catalog");
 
-  const [showTutorial, setShowTutorial] = useState(() => {
-    if (typeof window !== "undefined") {
-      return !localStorage.getItem("ar_tutorial_seen");
+  const [showTutorial, setShowTutorial] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && !localStorage.getItem("ar_tutorial_seen")) {
+      setShowTutorial(true);
     }
-    return false;
-  });
+  }, []);
 
   const handleTutorialClose = () => {
     setShowTutorial(false);
@@ -59,7 +60,7 @@ export default function ARPage() {
             image: item.imageUrl,
             price: item.price || "$--",
             category: item.category || "Furniture",
-            modelUrl: item.modelUrl || "/models/mid_century_lounge_chair_4k.glb",
+            modelUrl: item.modelUrl || "https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Assets@main/Models/SheenChair/glTF-Binary/SheenChair.glb",
             fallbackImage: item.imageUrl,
             realWidthM: Number(item.realWidthM) || inferRealWidthMeters(item),
             confidence: item.confidence,
@@ -92,11 +93,69 @@ export default function ARPage() {
         }
       } catch (err) {
         if (!cancelled) {
+          // Free demo 3D models from Khronos Group glTF-Sample-Assets (public domain / Apache 2.0)
+          // These are REAL .glb 3D models hosted on GitHub that work with <model-viewer>
+          const KHRONOS_BASE = "https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Assets@main/Models";
           const fallback = [
             {
               id: 1,
+              title: "Sheen Fabric Chair",
+              desc: "Elegant damask fabric chair with realistic sheen material rendering.",
+              image: `${KHRONOS_BASE}/SheenChair/screenshot/screenshot_Large.jpg`,
+              price: "$749",
+              category: "Seating",
+              modelUrl: `${KHRONOS_BASE}/SheenChair/glTF-Binary/SheenChair.glb`,
+              fallbackImage: `${KHRONOS_BASE}/SheenChair/screenshot/screenshot_Large.jpg`,
+              realWidthM: 0.6,
+            },
+            {
+              id: 2,
+              title: "Stained Glass Lamp",
+              desc: "Tiffany-style stained glass table lamp with beautiful light effects.",
+              image: `${KHRONOS_BASE}/StainedGlassLamp/screenshot/screenshot_Large.jpg`,
+              price: "$329",
+              category: "Lighting",
+              modelUrl: `${KHRONOS_BASE}/StainedGlassLamp/glTF-Binary/StainedGlassLamp.glb`,
+              fallbackImage: `${KHRONOS_BASE}/StainedGlassLamp/screenshot/screenshot_Large.jpg`,
+              realWidthM: 0.35,
+            },
+            {
+              id: 3,
+              title: "Anisotropy Barn Lamp",
+              desc: "Modern barn-style desk lamp with metallic anisotropic finish.",
+              image: `${KHRONOS_BASE}/AnisotropyBarnLamp/screenshot/screenshot_Large.jpg`,
+              price: "$189",
+              category: "Lighting",
+              modelUrl: `${KHRONOS_BASE}/AnisotropyBarnLamp/glTF-Binary/AnisotropyBarnLamp.glb`,
+              fallbackImage: `${KHRONOS_BASE}/AnisotropyBarnLamp/screenshot/screenshot_Large.jpg`,
+              realWidthM: 0.3,
+            },
+            {
+              id: 4,
+              title: "Iridescent Accent Lamp",
+              desc: "Unique iridescent lamp adding color-shifting accents to any room.",
+              image: `${KHRONOS_BASE}/IridescenceLamp/screenshot/screenshot_Large.jpg`,
+              price: "$259",
+              category: "Lighting",
+              modelUrl: `${KHRONOS_BASE}/IridescenceLamp/glTF-Binary/IridescenceLamp.glb`,
+              fallbackImage: `${KHRONOS_BASE}/IridescenceLamp/screenshot/screenshot_Large.jpg`,
+              realWidthM: 0.25,
+            },
+            {
+              id: 5,
+              title: "Antique Camera (Decor)",
+              desc: "Vintage camera model, great as a decorative shelf piece.",
+              image: `${KHRONOS_BASE}/AntiqueCamera/screenshot/screenshot_Large.jpg`,
+              price: "$129",
+              category: "Decor",
+              modelUrl: `${KHRONOS_BASE}/AntiqueCamera/glTF-Binary/AntiqueCamera.glb`,
+              fallbackImage: `${KHRONOS_BASE}/AntiqueCamera/screenshot/screenshot_Large.jpg`,
+              realWidthM: 0.2,
+            },
+            {
+              id: 6,
               title: "Mid-Century Lounge Chair",
-              desc: "Iconic lounge chair, perfect for modern interiors.",
+              desc: "Iconic lounge chair, perfect for modern interiors. (Local model)",
               image: "https://picsum.photos/400/300?random=109",
               price: "$899",
               category: "Furniture",
@@ -181,7 +240,7 @@ export default function ARPage() {
         </div>
 
         <ARPlacement
-          modelSrc={selectedModel?.modelUrl || "/models/mid_century_lounge_chair_4k.glb"}
+          modelSrc={selectedModel?.modelUrl || "https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Assets@main/Models/SheenChair/glTF-Binary/SheenChair.glb"}
           fallbackImageSrc={selectedModel?.fallbackImage || selectedModel?.image || "/vercel.svg"}
           alt={selectedModel?.title || "selected furniture"}
           modelRealWidthMeters={parseFloat(modelWidthM) || null}
