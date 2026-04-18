@@ -18,7 +18,7 @@ export default function ARTutorial({ onClose }) {
     },
     {
       title: "3. Place and Adjust",
-      text: "Drag, rotate, and scale the item to match your room.",
+      text: "Drag to move. Pinch to scale. Twist with two fingers to rotate.",
     },
     {
       title: "Done",

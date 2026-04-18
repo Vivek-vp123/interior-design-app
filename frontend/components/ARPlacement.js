@@ -8,7 +8,11 @@ export default function ARPlacement({
 }) {
   const containerRef = useRef(null);
   const videoRef = useRef(null);
-  const dragStartRef = useRef(null);
+  const activePointersRef = useRef(new Map());
+  const gestureRef = useRef(null);
+  const positionRef = useRef({ x: 0.5, y: 0.78 });
+  const rotationRef = useRef(0);
+  const manualScaleRef = useRef(1);
 
   const [mounted, setMounted] = useState(false);
   const [mode, setMode] = useState("camera");
@@ -91,6 +95,25 @@ export default function ARPlacement({
     setManualScale(1);
   }, [fallbackImageSrc]);
 
+  useEffect(() => {
+    positionRef.current = position;
+  }, [position]);
+
+  useEffect(() => {
+    rotationRef.current = rotation;
+  }, [rotation]);
+
+  useEffect(() => {
+    manualScaleRef.current = manualScale;
+  }, [manualScale]);
+
+  useEffect(() => {
+    if (calibrationMode || mode !== "camera") {
+      activePointersRef.current.clear();
+      gestureRef.current = null;
+    }
+  }, [calibrationMode, mode]);
+
   const displayedWidthPx = useMemo(() => {
     if (pixelsPerMeter && modelRealWidthMeters && modelRealWidthMeters > 0) {
       return Math.max(48, pixelsPerMeter * modelRealWidthMeters * manualScale);
@@ -108,46 +131,168 @@ export default function ARPlacement({
     y: Math.max(0.05, Math.min(0.95, y)),
   });
 
-  const beginDrag = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const clampScale = (s) => Math.max(0.3, Math.min(3, s));
 
+  const getTwoPointers = () => {
+    const pts = Array.from(activePointersRef.current.values());
+    if (pts.length < 2) return null;
+    return [pts[0], pts[1]];
+  };
+
+  const distance = (a, b) => Math.hypot(b.x - a.x, b.y - a.y);
+  const angle = (a, b) => Math.atan2(b.y - a.y, b.x - a.x);
+  const midpoint = (a, b) => ({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
+
+  const initializeOnePointerGesture = (e) => {
     const rect = containerRef.current?.getBoundingClientRect();
     if (!rect) return;
 
-    dragStartRef.current = {
+    gestureRef.current = {
+      kind: e.pointerType === "mouse" && e.shiftKey ? "rotate" : "move",
+      startPointerId: e.pointerId,
       startPointerX: e.clientX,
       startPointerY: e.clientY,
-      startX: position.x,
-      startY: position.y,
+      startPos: positionRef.current,
+      startRotation: rotationRef.current,
       width: rect.width,
       height: rect.height,
     };
   };
 
-  useEffect(() => {
-    const onMove = (e) => {
-      const state = dragStartRef.current;
-      if (!state) return;
+  const initializeTwoPointerGesture = () => {
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
 
+    const pair = getTwoPointers();
+    if (!pair) return;
+    const [p1, p2] = pair;
+
+    const startDistance = Math.max(1, distance(p1, p2));
+    const startAngle = angle(p1, p2);
+    const startMid = midpoint(p1, p2);
+
+    gestureRef.current = {
+      kind: "transform",
+      startDistance,
+      startAngle,
+      startMid,
+      startPos: positionRef.current,
+      startScale: manualScaleRef.current,
+      startRotation: rotationRef.current,
+      width: rect.width,
+      height: rect.height,
+    };
+  };
+
+  const onObjectPointerDown = (e) => {
+    if (calibrationMode) return;
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {
+      // Ignore if capture fails (Safari quirks / non-capturable targets)
+    }
+
+    activePointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    const count = activePointersRef.current.size;
+    if (count === 1) initializeOnePointerGesture(e);
+    if (count === 2) initializeTwoPointerGesture();
+  };
+
+  const onObjectPointerMove = (e) => {
+    if (calibrationMode) return;
+    if (!activePointersRef.current.has(e.pointerId)) return;
+
+    activePointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const state = gestureRef.current;
+    if (!state) return;
+
+    if (activePointersRef.current.size === 1 && (state.kind === "move" || state.kind === "rotate")) {
       const dx = (e.clientX - state.startPointerX) / state.width;
       const dy = (e.clientY - state.startPointerY) / state.height;
 
-      setPosition(clampPosition(state.startX + dx, state.startY + dy));
-    };
+      if (state.kind === "rotate") {
+        setRotation(state.startRotation + dx * 180);
+      } else {
+        setPosition(clampPosition(state.startPos.x + dx, state.startPos.y + dy));
+      }
 
-    const onUp = () => {
-      dragStartRef.current = null;
-    };
+      return;
+    }
 
-    window.addEventListener("pointermove", onMove);
-    window.addEventListener("pointerup", onUp);
+    if (activePointersRef.current.size >= 2 && state.kind === "transform") {
+      const pair = getTwoPointers();
+      if (!pair) return;
+      const [p1, p2] = pair;
 
-    return () => {
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerup", onUp);
-    };
-  }, []);
+      const currentDistance = Math.max(1, distance(p1, p2));
+      const currentAngle = angle(p1, p2);
+      const currentMid = midpoint(p1, p2);
+
+      const scaleFactor = currentDistance / state.startDistance;
+      setManualScale(clampScale(state.startScale * scaleFactor));
+
+      const deltaAngleDeg = ((currentAngle - state.startAngle) * 180) / Math.PI;
+      setRotation(state.startRotation + deltaAngleDeg);
+
+      const dx = (currentMid.x - state.startMid.x) / state.width;
+      const dy = (currentMid.y - state.startMid.y) / state.height;
+      setPosition(clampPosition(state.startPos.x + dx, state.startPos.y + dy));
+    }
+  };
+
+  const onObjectPointerUpOrCancel = (e) => {
+    if (!activePointersRef.current.has(e.pointerId)) return;
+
+    activePointersRef.current.delete(e.pointerId);
+
+    const remainingCount = activePointersRef.current.size;
+    if (remainingCount === 0) {
+      gestureRef.current = null;
+      return;
+    }
+
+    if (remainingCount === 1) {
+      const remainingId = Array.from(activePointersRef.current.keys())[0];
+      const remainingPt = activePointersRef.current.get(remainingId);
+      if (!remainingPt) return;
+
+      const rect = containerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+
+      gestureRef.current = {
+        kind: "move",
+        startPointerId: remainingId,
+        startPointerX: remainingPt.x,
+        startPointerY: remainingPt.y,
+        startPos: positionRef.current,
+        startRotation: rotationRef.current,
+        width: rect.width,
+        height: rect.height,
+      };
+      return;
+    }
+
+    if (remainingCount >= 2) {
+      initializeTwoPointerGesture();
+    }
+  };
+
+  const onObjectWheel = (e) => {
+    if (calibrationMode) return;
+    // Make desktop adjustments possible without buttons.
+    e.preventDefault();
+    e.stopPropagation();
+
+    const delta = Math.sign(e.deltaY);
+    const step = e.ctrlKey ? 0.02 : 0.05;
+    setManualScale((s) => clampScale(s - delta * step));
+  };
 
   const onContainerPointerDown = (e) => {
     if (!calibrationMode) return;
@@ -282,7 +427,11 @@ export default function ARPlacement({
 
             {supportsModelViewer && modelSrc ? (
               <div
-                onPointerDown={beginDrag}
+                onPointerDown={onObjectPointerDown}
+                onPointerMove={onObjectPointerMove}
+                onPointerUp={onObjectPointerUpOrCancel}
+                onPointerCancel={onObjectPointerUpOrCancel}
+                onWheel={onObjectWheel}
                 style={{
                   position: "absolute",
                   left: `${position.x * 100}%`,
@@ -294,6 +443,7 @@ export default function ARPlacement({
                   userSelect: "none",
                   touchAction: "none",
                   zIndex: 10,
+                  pointerEvents: calibrationMode ? "none" : "auto",
                 }}
               >
                 <div style={{ width: "100%", height: "100%", filter: "drop-shadow(0 14px 18px rgba(0,0,0,0.35))" }}>
@@ -318,7 +468,11 @@ export default function ARPlacement({
                     setImageAspectRatio(img.naturalWidth / img.naturalHeight);
                   }
                 }}
-                onPointerDown={beginDrag}
+                onPointerDown={onObjectPointerDown}
+                onPointerMove={onObjectPointerMove}
+                onPointerUp={onObjectPointerUpOrCancel}
+                onPointerCancel={onObjectPointerUpOrCancel}
+                onWheel={onObjectWheel}
                 style={{
                   position: "absolute",
                   left: `${position.x * 100}%`,
@@ -331,6 +485,7 @@ export default function ARPlacement({
                   userSelect: "none",
                   touchAction: "none",
                   filter: "drop-shadow(0 14px 18px rgba(0,0,0,0.35))",
+                  pointerEvents: calibrationMode ? "none" : "auto",
                 }}
                 draggable={false}
               />
@@ -358,10 +513,6 @@ export default function ARPlacement({
           </div>
 
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
-            <button onClick={() => setRotation((r) => r - 10)} style={button}>Rotate Left</button>
-            <button onClick={() => setRotation((r) => r + 10)} style={button}>Rotate Right</button>
-            <button onClick={() => setManualScale((s) => Math.max(0.3, s - 0.1))} style={button}>Scale -</button>
-            <button onClick={() => setManualScale((s) => Math.min(3, s + 0.1))} style={button}>Scale +</button>
             <button onClick={alignToFloor} style={button}>Align to Floor</button>
             <button onClick={() => setCalibrationMode((v) => !v)} style={calibrationMode ? activeButton : button}>
               {calibrationMode ? "Stop Calibrate" : "Calibrate Scale"}
@@ -396,7 +547,7 @@ export default function ARPlacement({
               <div style={metric}><strong>Model width:</strong> {modelRealWidthMeters ? `${modelRealWidthMeters} m` : "not set"}</div>
               <div style={metric}><strong>Pixels/meter:</strong> {pixelsPerMeter ? pixelsPerMeter.toFixed(2) : "not calibrated"}</div>
               <div style={metric}><strong>Rendered width:</strong> {Math.round(displayedWidthPx)} px</div>
-              <div style={metric}><strong>Tip:</strong> drag object to fine-tune placement.</div>
+              <div style={metric}><strong>Tip:</strong> drag to move, pinch to scale, twist to rotate. (Desktop: Shift-drag rotates, wheel scales.)</div>
             </div>
           </div>
         </div>
@@ -420,12 +571,6 @@ const activeButton = {
   background: "#4f46e5",
   color: "#fff",
 };
-
-const buttonDisabled = (enabled) => ({
-  ...button,
-  opacity: enabled ? 1 : 0.5,
-  cursor: enabled ? "pointer" : "not-allowed",
-});
 
 const overlayText = {
   position: "absolute",
